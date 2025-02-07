@@ -8,13 +8,17 @@ db_handler = DatabaseHandler()
 @app.route('/')
 def index():
     try:
-        db_handler.connect()
-        query = "select * from cars"
-        cars = db_handler.fetchall(query)
-        return render_template('index.html', cars=cars)
+        return render_template('index.html')
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/register') 
+def register():
+    return render_template('register.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

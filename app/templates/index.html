@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Service Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-
 <body>
-    <h1>Cars in the Database</h1>
+    <header>
+        <h1>Welcome to Car Service Management</h1>
+    </header>
 
-    {% if cars %}
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Car ID</th>
-                <th>Name</th>
-                <th>Model</th>
-                <th>Year</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for car in cars %}
-            <tr>
-                <td>{{ car.car_id }}</td>
-                <td>{{ car.name }}</td>
-                <td>{{ car.model }}</td>
-                <td>{{ car.year }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No cars found in the database.</p>
-    {% endif %}
+    <main>
+        <section>
+            <h2>Manage Your Car Services Easily</h2>
+            <p>Track and manage your car's service records, schedule appointments, and much more!</p>
+        </section>
+
+        <section>
+            <h3>Get Started</h3>
+            <p>If you're an existing user, you can <a href="{{ url_for('login') }}">log in</a>.</p>
+            <p>If you're new, feel free to <a href="{{ url_for('register') }}">create an account</a>.</p>
+        </section>
+
+    </main>
+
 </body>
-
 </html>
