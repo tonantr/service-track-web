@@ -1,0 +1,34 @@
+2025-02-07 15:16:59,709 - INFO - _internal - Line: 97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-07 15:16:59,709 - INFO - _internal - Line: 97 - [33mPress CTRL+C to quit[0m
+2025-02-07 15:16:59,709 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-07 15:16:59,810 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-07 15:16:59,815 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-07 15:17:36,998 - INFO - _internal - Line: 97 - 127.0.0.1 - - [07/Feb/2025 15:17:36] "GET / HTTP/1.1" 200 -
+2025-02-07 15:17:37,066 - INFO - _internal - Line: 97 - 127.0.0.1 - - [07/Feb/2025 15:17:37] "GET / HTTP/1.1" 200 -
+2025-02-07 15:20:32,578 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/app.py', reloading
+2025-02-07 15:20:32,609 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-07 15:20:32,769 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-07 15:20:32,774 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-07 15:20:33,820 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/app.py', reloading
+2025-02-07 15:20:33,847 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-07 15:20:33,956 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-07 15:20:33,960 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-07 15:20:35,021 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/app.py', reloading
+2025-02-07 15:20:35,050 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-07 15:20:35,161 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-07 15:20:35,165 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-07 15:20:39,304 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/app.py', reloading
+2025-02-07 15:20:39,335 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-07 15:20:39,447 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-07 15:20:39,451 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-07 15:20:50,533 - INFO - _internal - Line: 97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-07 15:20:50,533 - INFO - _internal - Line: 97 - [33mPress CTRL+C to quit[0m
+2025-02-07 15:20:50,533 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-07 15:20:50,631 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-07 15:20:50,635 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-07 15:20:55,807 - INFO - database_handler - Line: 32 - Successfully connected to the database: service_track
+2025-02-07 15:20:55,822 - INFO - _internal - Line: 97 - 127.0.0.1 - - [07/Feb/2025 15:20:55] "GET / HTTP/1.1" 200 -
+2025-02-07 15:22:42,554 - INFO - database_handler - Line: 32 - Successfully connected to the database: service_track
+2025-02-07 15:22:42,564 - INFO - _internal - Line: 97 - 127.0.0.1 - - [07/Feb/2025 15:22:42] "GET / HTTP/1.1" 200 -
