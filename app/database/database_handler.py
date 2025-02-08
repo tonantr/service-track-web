@@ -45,7 +45,7 @@ class DatabaseHandler:
             logging.error(f"Close Error: {str(e)}")
             print(f"Error: {str(e)}")
 
-    def fetchall(self, query, params=None):
+    def fetch_all(self, query, params=None):
         # Execute a query and return the result
         try:
             self.cursor.execute(query, params or ())
