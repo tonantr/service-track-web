@@ -14,7 +14,7 @@ class AdminActions:
     def __init__(self):
         self.admin_db_handler = AdminDatabaseHandler()
 
-    def list_users(self):
+    def get_all_users(self):
         try:
             with self.admin_db_handler as db:
                 users = db.get_all_users()
@@ -26,4 +26,13 @@ class AdminActions:
             return users
         except Exception as e:
             logging.error("Error in list_users: %s", str(e))
-            return []
+            return None
+
+    def get_total_users(self):
+        try:
+            with self.admin_db_handler as db:
+                return db.get_total_users()
+        except Exception as e:
+            logging.error("Error in list_users: %s", str(e))
+            return None
+            

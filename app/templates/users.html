@@ -12,37 +12,34 @@
 
     <div class="navbar">
         <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/users">Users</a>
-        <a href="#">Cars</a>
-        <a href="#">Services</a>
         <a href="/logout" class="logout">Logout</a>
     </div>
 
     <div class="container">
         <h1>Manage Users</h1>
-
+        <hr>
         {% if users %}
-        <table>
+        <table style="width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>User Name</th>
-                    <th>Role</th>
-                    <th>Email</th>
-                    <th>Actions</th>
+                    <th style="padding: 5px; text-align: left;">ID</th>
+                    <th style="padding: 5px; text-align: left;">Name</th>
+                    <th style="padding: 5px; text-align: left;">Role</th>
+                    <th style="padding: 5px; text-align: left;">Email</th>
+                    <th style="padding: 5px; text-align: left;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td>{{ user.user_id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>
-                        <!-- Add action links for editing or deleting users -->
-                        <a href="#">Edit</a> |
-                        <a href="#">Delete</a>
+                    <td style="padding: 5px;">{{ user.user_id }}</td>
+                    <td style="padding: 5px;">{{ user.username }}</td>
+                    <td style="padding: 5px;">{{ user.role }}</td>
+                    <td style="padding: 5px;">{{ user.email }}</td>
+                    <td style="padding: 5px;">
+                        <a href="#">Add</a> |
+                        <a href="#">Update</a> |
+                        <a href="#" onclick="return confirm('Are you sure?');">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
