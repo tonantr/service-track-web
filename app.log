@@ -2,3 +2,37 @@
 2025-02-09 14:43:20,087 - INFO - _internal - Line: 97 - 127.0.0.1 - - [09/Feb/2025 14:43:20] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
 2025-02-09 14:44:03,143 - INFO - _internal - Line: 97 - 127.0.0.1 - - [09/Feb/2025 14:44:03] "GET / HTTP/1.1" 200 -
 2025-02-09 14:44:03,155 - INFO - _internal - Line: 97 - 127.0.0.1 - - [09/Feb/2025 14:44:03] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-09 14:47:52,866 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:47:52,885 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:47:53,040 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:47:53,045 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:47:58,194 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:47:58,217 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:47:58,333 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:47:58,337 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:00,956 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:51:00,980 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:51:01,101 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:51:01,105 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:06,260 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:51:06,289 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:51:06,408 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:51:06,412 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:07,458 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:51:07,481 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:51:07,590 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:51:07,593 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:09,703 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:51:09,731 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:51:09,841 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:51:09,844 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:11,928 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:51:11,956 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:51:12,067 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:51:12,071 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:18,289 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-09 14:51:18,315 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-09 14:51:18,425 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-09 14:51:18,429 - INFO - _internal - Line: 97 -  * Debugger PIN: 307-846-981
+2025-02-09 14:51:35,954 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/app.py', reloading
+2025-02-09 14:51:35,984 - INFO - _internal - Line: 97 -  * Restarting with stat

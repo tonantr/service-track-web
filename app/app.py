@@ -3,6 +3,7 @@ from app.database.database_handler import DatabaseHandler
 from app.utils.helpers import Helpers
 from app.auth.login import Login
 import os
+from app.utils.constants import ERROR_USER_NOT_FOUND, ERROR_PLEASE_LOG_IN
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
@@ -27,7 +28,7 @@ def index():
                 )
             )
         else:
-            flash("Login failed.", "error")
+            flash(ERROR_USER_NOT_FOUND, "error")
             return redirect(url_for("index"))
 
     return render_template("index.html")
@@ -36,7 +37,7 @@ def index():
 @app.route("/admin/dashboard")
 def admin_dashboard():
     if "username" not in session or session.get("role") != "admin":
-        flash("Please log in.", "error")
+        flash(ERROR_PLEASE_LOG_IN, "error")
         return redirect(url_for("index"))
 
     return render_template(
@@ -47,7 +48,7 @@ def admin_dashboard():
 @app.route("/user/dashboard")
 def user_dashboard():
     if "username" not in session or session.get("role") != "user":
-        flash("Please log in.", "error")
+        flash(ERROR_PLEASE_LOG_IN, "error")
         return redirect(url_for("index"))
 
     return render_template(
