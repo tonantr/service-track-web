@@ -1,0 +1,25 @@
+# Ignore PyInstaller files
+/dist/
+/build/
+*.spec
+
+# Ignore system files
+.DS_Store
+
+# Ignore Python bytecode
+*.pyc
+__pycache__/
+
+# Ignore logs
+*.log
+logs/
+
+# Ignore virtual environment
+venv/
+.env/
+.envrc
+*.env
+
+# Ignore database files
+*.sqlite3
+*.db

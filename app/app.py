@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 from app.database.database_handler import DatabaseHandler
 from app.utils.helpers import Helpers
 from app.auth.login import Login
+import os
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key"
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 db_handler = DatabaseHandler()
 helpers = Helpers(db_handler)
