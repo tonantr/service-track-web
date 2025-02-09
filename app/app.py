@@ -1,10 +1,3 @@
-# from flask import Flask, render_template, request, redirect, flash, url_for, session
-# from app.database.database_handler import DatabaseHandler
-# from app.utils.helpers import Helpers
-# from app.auth.login import Login
-# import os
-# from app.utils.constants import ERROR_USER_NOT_FOUND, ERROR_PLEASE_LOG_IN
-
 from flask import Flask
 import os
 from app.routes.auth.auth_routes import init_app as init_auth_routes
@@ -29,5 +22,3 @@ init_logout_routes(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-   
