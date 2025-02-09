@@ -11,6 +11,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(module)s - Line: %(lineno)d - %(message)s",
 )
 
+
 class DatabaseHandler:
     def __init__(self, host=None, user=None, password=None, database=None):
         self.host = host or os.getenv("MYSQL_HOST_WINDOWS")
@@ -29,7 +30,6 @@ class DatabaseHandler:
                 database=self.database,
             )
             self.cursor = self.connection.cursor(dictionary=True)
-            logging.info(f"Successfully connected to the database: {self.database}")
         except mysql.connector.Error as e:
             logging.error(f"Connection Error: {str(e)}")
             print(f"Error: {str(e)}")
@@ -40,10 +40,19 @@ class DatabaseHandler:
                 self.cursor.close()
             if self.connection:
                 self.connection.close()
-            logging.info("Database connection closed successfully.")
         except mysql.connector.Error as e:
             logging.error(f"Close Error: {str(e)}")
             print(f"Error: {str(e)}")
+
+    def __enter__(self):
+        self.connect()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+        if exc_type:
+            logging.error(f"Error: {exc_value}")
+        return True
 
     def fetch_all(self, query, params=None):
         # Execute a query and return the result
