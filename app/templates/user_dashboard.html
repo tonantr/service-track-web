@@ -4,13 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - Car Service Tracker</title>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-    <h1>User Dashboard</h1>
-    <p><strong>Sign in as:</strong> {{ logged_in_user }} ({{ role }})</p>
-    <p>View Dashboard</p>
+
+    <div class="navbar">
+        <div>
+            <a href="#">Dashboard</a>
+            <a href="#">My Profile</a>
+            <a href="#">My Cars</a>
+            <a href="#">Service History</a>
+        </div>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>User Dashboard</h1>
+        <p><strong>Signed in as:</strong> {{ logged_in_user }} ({{ role }})</p>
+
+        <div class="dashboard-card">
+            <h2>Overview</h2>
+            <p>Manage your cars and service history from this dashboard.</p>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="stats-container">
+            <div class="stats-box">
+                <h2>My Cars</h2>
+                <p>{{ user_cars }}</p>
+            </div>
+            <div class="stats-box">
+                <h2>Pending Services</h2>
+                <p>{{ pending_services }}</p>
+            </div>
+            <div class="stats-box">
+                <h2>Completed Services</h2>
+                <p>{{ completed_services }}</p>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 
 </html>

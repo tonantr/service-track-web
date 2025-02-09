@@ -4,13 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Car Service Tracker</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-    <h1>Admin Dashboard</h1>
-    <p><strong>Sign in as:</strong> {{ logged_in_user }} ({{ role }})</p>
-    <p>View Dashboard</p>
+
+    <div class="navbar">
+        <div>
+            <a href="#">Dashboard</a>
+            <a href="#">Users</a>
+            <a href="#">Cars</a>
+            <a href="#">Services</a>
+        </div>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p><strong>Signed in as:</strong> {{ logged_in_user }} ({{ role }})</p>
+
+        <div class="dashboard-card">
+            <h2>Overview</h2>
+            <p>Manage users, cars, and services from this dashboard.</p>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="stats-container">
+            <div class="stats-box">
+                <h2>Total Users</h2>
+                <p>{{ total_users }}</p>
+            </div>
+            <div class="stats-box">
+                <h2>Total Cars</h2>
+                <p>{{ total_cars }}</p>
+            </div>
+            <div class="stats-box">
+                <h2>Total Services</h2>
+                <p>{{ total_services }}</p>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 
 </html>
