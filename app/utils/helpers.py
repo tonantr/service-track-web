@@ -1,5 +1,6 @@
 import logging
 from app.database.database_handler import DatabaseHandler
+from flask import flash, redirect
 
 logging.basicConfig(
     filename="app.log",

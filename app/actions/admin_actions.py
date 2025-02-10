@@ -49,3 +49,11 @@ class AdminActions:
         except Exception as e:
             logging.error(f"Error in get_total_users: {str(e)}")
             return None
+
+    def get_total_cars(self):
+        try:
+            with self.admin_db_handler as db:
+                return db.get_total_cars()
+        except Exception as e:
+            logging.error(f"Error in get_total_cars: {str(e)}")
+            return None

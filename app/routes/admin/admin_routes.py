@@ -7,7 +7,6 @@ from app.utils.constants import (
 )
 from app.actions.admin_actions import AdminActions
 
-
 admin_actions = AdminActions()
 
 
@@ -20,16 +19,18 @@ def init_app(app):
 
         try:
             total_users = admin_actions.get_total_users()
+            total_cars = admin_actions.get_total_cars()
 
-            if total_users is None:
-                total_users = ERROR_FETCHING_DATA
+            if total_users is None or total_cars is None:
+                raise Exception(ERROR_FETCHING_DATA)
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "error")
-            total_users = ERROR_FETCHING_DATA
+            return redirect(url_for("admin_dashboard"))
 
         return render_template(
             "admin_dashboard.html",
             total_users=total_users,
+            total_cars=total_cars,
             logged_in_user=session["username"],
             role=session["role"],
         )
@@ -52,7 +53,6 @@ def init_app(app):
             flash(f"An error occurred: {str(e)}", "error")
             return redirect(url_for("admin_dashboard"))
 
-
     @app.route("/admin/cars")
     def list_cars():
         if "username" not in session or session.get("role") != "admin":
@@ -64,7 +64,7 @@ def init_app(app):
             if not cars:
                 flash(ERROR_NO_CARS_FOUND, "warning")
                 return redirect(url_for("admin_dashboard"))
-            
+
             return render_template("cars.html", cars=cars)
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "error")
