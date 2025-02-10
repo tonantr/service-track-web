@@ -5,7 +5,6 @@ from app.utils.constants import (
     ERROR_FETCHING_DATA,
     ERROR_NO_CARS_FOUND,
     ERROR_NO_SERVICES_FOUND,
-    EXPORT_CSV_MESSAGE,
 )
 from app.actions.admin_actions import AdminActions
 import logging
@@ -86,26 +85,16 @@ def init_app(app):
                 return redirect(url_for("admin_dashboard"))
 
             for service in services:
-                service["mileage"] = (
-                    service["mileage"] if service["mileage"] is not None else "N/A"
-                )
-                service["service_type"] = (
-                    service["service_type"] if service["service_type"] else "N/A"
-                )
-                service["service_date"] = (
-                    service["service_date"] if service["service_date"] else "N/A"
-                )
-                service["next_service_date"] = (
-                    service["next_service_date"]
-                    if service["next_service_date"]
-                    else "N/A"
-                )
-                service["cost"] = (
-                    service["cost"] if service["cost"] is not None else "N/A"
-                )
-                service["notes"] = service["notes"] if service["notes"] else "N/A"
+                service["mileage"] = service["mileage"] or "N/A"
+                service["service_type"] = service["service_type"] or "N/A"
+                service["service_date"] = service["service_date"] or "N/A"
+                service["next_service_date"] = service["next_service_date"] or "N/A"
+                service["cost"] = service["cost"] if service["cost"] is not None else "N/A"
+                service["notes"] = service["notes"] or "N/A"
 
-            return render_template("services.html", services=services, message=EXPORT_CSV_MESSAGE)
+            return render_template(
+                "services.html", services=services
+            )
 
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "error")

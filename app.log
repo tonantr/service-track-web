@@ -95,3 +95,119 @@
 2025-02-10 00:09:14,376 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 00:09:14] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
 2025-02-10 00:09:15,940 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 00:09:15] "GET /admin/services HTTP/1.1" 200 -
 2025-02-10 00:09:15,951 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 00:09:15] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:20:18,839 - INFO - _internal - Line: 97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-10 11:20:18,839 - INFO - _internal - Line: 97 - [33mPress CTRL+C to quit[0m
+2025-02-10 11:20:18,840 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:20:18,943 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:20:18,948 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:21:37,281 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:37] "GET / HTTP/1.1" 200 -
+2025-02-10 11:21:37,303 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:37] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:21:37,361 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-10 11:21:53,854 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:53] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-02-10 11:21:53,993 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:53] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:21:54,012 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:54] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:21:58,839 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:58] "GET /admin/users HTTP/1.1" 200 -
+2025-02-10 11:21:58,861 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:21:58] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:22:02,551 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:02] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:22:02,564 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:02] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:22:03,425 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:03] "GET /admin/cars HTTP/1.1" 200 -
+2025-02-10 11:22:03,439 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:03] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:22:06,555 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:06] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:22:06,575 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:06] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:22:07,467 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:07] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:22:07,476 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:07] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:22:56,681 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:56] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:22:56,692 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:22:56] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:23:18,569 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:23:18,595 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:23:18,751 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:23:18,756 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:23:21,878 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:23:21,904 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:23:22,018 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:23:22,022 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:23:31,256 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:23:31] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:23:31,271 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:23:31] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:26:08,265 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:26:08,300 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:26:08,464 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:26:08,468 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:26:19,831 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:26:19,861 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:26:19,976 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:26:19,980 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:27:26,046 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:27:26,074 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:27:26,199 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:27:26,205 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:27:28,288 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:27:28,317 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:27:28,437 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:27:28,440 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:27:30,527 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:27:30,555 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:27:30,667 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:27:30,671 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:27:47,224 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:27:47,251 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:27:47,362 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:27:47,366 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:27:48,426 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/utils/constants.py', reloading
+2025-02-10 11:27:48,452 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:27:48,563 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:27:48,567 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:28:26,974 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:28:26] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:28:26,990 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:28:26] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:08,996 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:08] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:29:09,009 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:09] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:18,840 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:18] "GET /admin/users HTTP/1.1" 200 -
+2025-02-10 11:29:18,854 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:18] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:24,627 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:24] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:29:24,641 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:24] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:26,074 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:26] "GET /admin/cars HTTP/1.1" 200 -
+2025-02-10 11:29:26,097 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:26] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:29,981 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:29] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:29:29,995 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:29] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:30,994 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:30] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:29:31,016 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:31] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:29:32,365 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:32] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:29:32,377 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:29:32] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:31:33,615 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/routes/admin/admin_routes.py', reloading
+2025-02-10 11:31:33,645 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:31:33,760 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:31:33,763 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:31:34,813 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/routes/admin/admin_routes.py', reloading
+2025-02-10 11:31:34,844 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:31:34,957 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:31:34,961 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:33:28,506 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/routes/admin/admin_routes.py', reloading
+2025-02-10 11:33:28,532 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:33:28,647 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:33:28,651 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:33:29,696 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/routes/admin/admin_routes.py', reloading
+2025-02-10 11:33:29,722 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:34:32,261 - INFO - _internal - Line: 97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-10 11:34:32,261 - INFO - _internal - Line: 97 - [33mPress CTRL+C to quit[0m
+2025-02-10 11:34:32,262 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:34:32,365 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:34:32,369 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:34:36,738 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:36] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:34:36,754 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:36] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:34:37,370 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:37] "GET /admin/users HTTP/1.1" 200 -
+2025-02-10 11:34:37,391 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:37] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:34:38,536 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:38] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:34:38,549 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:38] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:34:39,440 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:39] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:34:39,452 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:39] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:34:44,364 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:44] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:34:44,377 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:34:44] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:37:57,690 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/routes/admin/admin_routes.py', reloading
+2025-02-10 11:37:57,716 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:37:57,834 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:37:57,838 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
+2025-02-10 11:38:07,134 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/routes/admin/admin_routes.py', reloading
+2025-02-10 11:38:07,166 - INFO - _internal - Line: 97 -  * Restarting with stat
+2025-02-10 11:38:07,278 - WARNING - _internal - Line: 97 -  * Debugger is active!
+2025-02-10 11:38:07,282 - INFO - _internal - Line: 97 -  * Debugger PIN: 105-592-761
