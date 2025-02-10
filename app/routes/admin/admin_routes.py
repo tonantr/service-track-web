@@ -9,6 +9,8 @@ from app.utils.constants import (
 from app.actions.admin_actions import AdminActions
 import logging
 
+logging.basicConfig(level=logging.ERROR)
+
 admin_actions = AdminActions()
 
 
@@ -22,17 +24,20 @@ def init_app(app):
         try:
             total_users = admin_actions.get_total_users()
             total_cars = admin_actions.get_total_cars()
+            total_services = admin_actions.get_total_services()
 
-            if total_users is None or total_cars is None:
+            if None in (total_users, total_cars, total_services):
                 raise Exception(ERROR_FETCHING_DATA)
         except Exception as e:
-            flash(f"An error occurred: {str(e)}", "error")
-            return redirect(url_for("admin_dashboard"))
+            logging.error(f"Error occurred: {str(e)}") 
+            error_message = f"An error occurred: {str(e)}"
+            return render_template("error.html", error_message=error_message)
 
         return render_template(
             "admin_dashboard.html",
             total_users=total_users,
             total_cars=total_cars,
+            total_services=total_services,
             logged_in_user=session["username"],
             role=session["role"],
         )
@@ -52,8 +57,9 @@ def init_app(app):
 
             return render_template("users.html", users=users)
         except Exception as e:
-            flash(f"An error occurred: {str(e)}", "error")
-            return redirect(url_for("admin_dashboard"))
+            logging.error(f"Error occurred: {str(e)}") 
+            error_message = f"An error occurred: {str(e)}"
+            return render_template("error.html", error_message=error_message)
 
     @app.route("/admin/cars")
     def list_cars():
@@ -69,8 +75,9 @@ def init_app(app):
 
             return render_template("cars.html", cars=cars)
         except Exception as e:
-            flash(f"An error occurred: {str(e)}", "error")
-            return redirect(url_for("admin_dashboard"))
+            logging.error(f"Error occurred: {str(e)}") 
+            error_message = f"An error occurred: {str(e)}"
+            return render_template("error.html", error_message=error_message)
 
     @app.route("/admin/services")
     def list_services():
@@ -97,5 +104,6 @@ def init_app(app):
             )
 
         except Exception as e:
-            flash(f"An error occurred: {str(e)}", "error")
-            return redirect(url_for("admin_dashboard"))
+            logging.error(f"Error occurred: {str(e)}") 
+            error_message = f"An error occurred: {str(e)}"
+            return render_template("error.html", error_message=error_message)

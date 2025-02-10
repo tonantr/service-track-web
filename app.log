@@ -264,3 +264,17 @@
 2025-02-10 11:47:28,898 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:47:28] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
 2025-02-10 11:48:00,318 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:48:00] "GET /admin/dashboard HTTP/1.1" 200 -
 2025-02-10 11:48:00,329 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:48:00] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:51:23,102 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:23] "GET /admin/cars HTTP/1.1" 200 -
+2025-02-10 11:51:23,124 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:23] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:51:26,610 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:26] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:51:26,624 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:26] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:51:27,550 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:27] "GET /admin/services HTTP/1.1" 200 -
+2025-02-10 11:51:27,567 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:27] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:51:32,786 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:32] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:51:32,806 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:32] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:51:33,628 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:33] "GET /admin/users HTTP/1.1" 200 -
+2025-02-10 11:51:33,648 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:33] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:51:35,249 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:35] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-02-10 11:51:35,263 - INFO - _internal - Line: 97 - 127.0.0.1 - - [10/Feb/2025 11:51:35] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2025-02-10 11:53:29,307 - INFO - _internal - Line: 97 -  * Detected change in '/Users/tonan/Documents/Programming/Python/service-track-web/app/database/admin_database_handler.py', reloading
+2025-02-10 11:53:29,334 - INFO - _internal - Line: 97 -  * Restarting with stat

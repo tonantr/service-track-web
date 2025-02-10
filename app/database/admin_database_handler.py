@@ -49,3 +49,8 @@ class AdminDatabaseHandler(DatabaseHandler):
         query = "SELECT COUNT(*) FROM cars"
         result = self.fetch_one(query)
         return result["COUNT(*)"] if result else 0
+    
+    def get_total_services(self):
+        query = "SELECT COUNT(*) FROM services"
+        result = self.fetch_one(query)
+        return result["COUNT(*)"] if result else 0
