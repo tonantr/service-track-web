@@ -1,5 +1,5 @@
 import logging
-from app.utils.constants import ERROR_NO_USERS_FOUND
+from app.utils.constants import ERROR_NO_USERS_FOUND, ERROR_NO_CARS_FOUND
 from app.database.admin_database_handler import AdminDatabaseHandler
 
 
@@ -21,11 +21,25 @@ class AdminActions:
 
             if not users:
                 print(ERROR_NO_USERS_FOUND)
-                return
+                return []
 
             return users
         except Exception as e:
-            logging.error("Error in list_users: %s", str(e))
+            logging.error(f"Error in get_all_users: {str(e)}")
+            return None
+
+    def get_all_cars(self):
+        try:
+            with self.admin_db_handler as db:
+                cars = db.get_all_cars()
+            
+            if not cars:
+                print(ERROR_NO_CARS_FOUND)
+                return []
+            
+            return cars
+        except Exception as e:
+            logging.error(f"Error in get_all_cars: {str(e)}")
             return None
 
     def get_total_users(self):
@@ -33,6 +47,5 @@ class AdminActions:
             with self.admin_db_handler as db:
                 return db.get_total_users()
         except Exception as e:
-            logging.error("Error in list_users: %s", str(e))
+            logging.error(f"Error in get_total_users: {str(e)}")
             return None
-            
