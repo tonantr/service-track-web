@@ -1,5 +1,12 @@
 from app.database.database_handler import DatabaseHandler
+import logging
 
+
+logging.basicConfig(
+    filename="app.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(module)s - Line: %(lineno)d - %(message)s",
+)
 
 class AdminDatabaseHandler(DatabaseHandler):
     def __init__(self):
@@ -8,6 +15,28 @@ class AdminDatabaseHandler(DatabaseHandler):
     def get_all_users(self):
         query = "SELECT user_id, username, role, email FROM users"
         return self.fetch_all(query)
+
+    def update_user(self, user_id, **kwargs):
+        if not kwargs:
+            raise ValueError("No fields to update")
+        
+        if "role" not in kwargs:
+            kwargs["role"] = "user"
+
+        if not kwargs.get("password"):
+            kwargs.pop("password", None)
+        
+        fields = []
+        values = []
+
+        for key, value in kwargs.items():
+            fields.append(f"{key}=%s")
+            values.append(value)
+
+        query = f"UPDATE users SET {','.join(fields)} WHERE user_id=%s"
+        values.append(user_id)
+
+        self.execute_commit(query, tuple(values))
 
     def get_all_cars(self):
         query = """

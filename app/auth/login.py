@@ -18,7 +18,7 @@ class Login:
 
     def authenticate(self, username, password):
         try:
-            user = self.helpers.load_user(username)
+            user = self.helpers.get_user_by_username(username)
             if user:
                 stored_password = user["password"]
                 if verify_password(password, stored_password):

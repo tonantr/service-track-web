@@ -1,6 +1,7 @@
-from flask import render_template, redirect, flash, url_for, session
+from flask import render_template, redirect, flash, url_for, request, session
 from app.utils.constants import (
     ERROR_NO_USERS_FOUND,
+    ERROR_USER_NOT_FOUND,
     ERROR_FETCHING_DATA,
     ERROR_NO_CARS_FOUND,
     ERROR_NO_SERVICES_FOUND,
@@ -8,6 +9,7 @@ from app.utils.constants import (
 from app.actions.admin_actions import AdminActions
 from app.database.database_handler import DatabaseHandler
 from app.utils.helpers import Helpers
+from app.auth.password_hashing import hash_password
 import logging
 
 logging.basicConfig(level=logging.ERROR)
@@ -61,6 +63,42 @@ def init_app(app):
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
+
+    @app.route("/admin/users/update/<int:user_id>", methods=["GET", "POST"])
+    def update_user(user_id):
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
+        user = helpers.get_user_by_id(user_id)
+
+        if not user:
+            flash(ERROR_USER_NOT_FOUND, "warning")
+            return redirect(url_for("list_users"))
+        
+        if request.method == "POST":
+            try:
+                updated_data = {
+                    "username": request.form.get("username"),
+                    "role": request.form.get("role"),
+                    "email": request.form.get("email"),
+                    "password": request.form.get("password")
+                }
+
+                if helpers.check_if_username_or_email_exists(updated_data["username"], updated_data["email"]):
+                    flash("Username or Email already exists.", "warning")
+                    return render_template("update_user.html", user=user)
+                
+                if updated_data["password"]:
+                    updated_data["password"] = hash_password(updated_data["password"])
+                
+                admin_actions.update_user(user_id, **updated_data)
+            
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("update_user.html", user=user)
 
     @app.route("/admin/cars")
     def list_cars():

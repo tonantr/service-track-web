@@ -28,6 +28,14 @@ class AdminActions:
             logging.error(f"Error in get_all_users: {str(e)}")
             return None
 
+    def update_user(self, user_id, **kwargs):
+        try:
+            with self.admin_db_handler as db:
+                db.update_user(user_id, **kwargs)
+        except Exception as e:
+            logging.error(f"Error in update_user: {str(e)}")
+            return None
+
     def get_all_cars(self):
         try:
             with self.admin_db_handler as db:
