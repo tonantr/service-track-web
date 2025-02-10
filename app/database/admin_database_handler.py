@@ -23,6 +23,23 @@ class AdminDatabaseHandler(DatabaseHandler):
         """
         return self.fetch_all(query)
 
+    def get_all_services(self):
+        query = """
+            SELECT 
+                s.service_id, 
+                c.name AS car_name,
+                s.mileage,
+                s.service_type, 
+                s.service_date,
+                s.next_service_date,
+                s.cost,
+                s.notes
+            FROM services s
+            LEFT JOIN cars c ON s.car_id = c.car_id
+            ORDER BY s.service_date ASC, s.next_service_date ASC;
+        """
+        return self.fetch_all(query)
+
     def get_total_users(self):
         query = "SELECT COUNT(*) FROM users"
         result = self.fetch_one(query)

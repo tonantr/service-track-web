@@ -4,8 +4,11 @@ from app.utils.constants import (
     ERROR_NO_USERS_FOUND,
     ERROR_FETCHING_DATA,
     ERROR_NO_CARS_FOUND,
+    ERROR_NO_SERVICES_FOUND,
+    EXPORT_CSV_MESSAGE,
 )
 from app.actions.admin_actions import AdminActions
+import logging
 
 admin_actions = AdminActions()
 
@@ -66,6 +69,44 @@ def init_app(app):
                 return redirect(url_for("admin_dashboard"))
 
             return render_template("cars.html", cars=cars)
+        except Exception as e:
+            flash(f"An error occurred: {str(e)}", "error")
+            return redirect(url_for("admin_dashboard"))
+
+    @app.route("/admin/services")
+    def list_services():
+        if "username" not in session or session.get("role") != "admin":
+            flash(ERROR_PLEASE_LOG_IN, "error")
+            return redirect(url_for("index"))
+        try:
+            services = admin_actions.get_all_services() or []
+
+            if not services:
+                flash(ERROR_NO_SERVICES_FOUND, "warning")
+                return redirect(url_for("admin_dashboard"))
+
+            for service in services:
+                service["mileage"] = (
+                    service["mileage"] if service["mileage"] is not None else "N/A"
+                )
+                service["service_type"] = (
+                    service["service_type"] if service["service_type"] else "N/A"
+                )
+                service["service_date"] = (
+                    service["service_date"] if service["service_date"] else "N/A"
+                )
+                service["next_service_date"] = (
+                    service["next_service_date"]
+                    if service["next_service_date"]
+                    else "N/A"
+                )
+                service["cost"] = (
+                    service["cost"] if service["cost"] is not None else "N/A"
+                )
+                service["notes"] = service["notes"] if service["notes"] else "N/A"
+
+            return render_template("services.html", services=services, message=EXPORT_CSV_MESSAGE)
+
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "error")
             return redirect(url_for("admin_dashboard"))
