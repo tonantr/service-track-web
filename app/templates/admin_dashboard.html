@@ -10,7 +10,7 @@
 
 <body>
 
-    <div class="navbar">
+    <nav class="navbar">
         <div>
             <a href="/admin/dashboard">Dashboard</a>
             <a href="/admin/users">Users</a>
@@ -18,7 +18,7 @@
             <a href="/admin/services">Services</a>
         </div>
         <a href="/logout" class="logout">Logout</a>
-    </div>
+    </nav>
 
     <div class="container">
         <h1>Admin Dashboard</h1>
@@ -27,9 +27,10 @@
         <div class="dashboard-card">
             <h2>Overview</h2>
             <p>Manage users, cars, and services from this dashboard.</p>
+            <p>For full details, please export to a CSV file.</p>
+            <button onclick="" class="export-btn">Export</button>
         </div>
 
-        <!-- Statistics Section -->
         <div class="stats-container">
             <div class="stats-box">
                 <h2>Total Users</h2>
