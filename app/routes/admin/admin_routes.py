@@ -1,24 +1,26 @@
 from flask import render_template, redirect, flash, url_for, session
 from app.utils.constants import (
-    ERROR_PLEASE_LOG_IN,
     ERROR_NO_USERS_FOUND,
     ERROR_FETCHING_DATA,
     ERROR_NO_CARS_FOUND,
     ERROR_NO_SERVICES_FOUND,
 )
 from app.actions.admin_actions import AdminActions
+from app.database.database_handler import DatabaseHandler
+from app.utils.helpers import Helpers
 import logging
 
 logging.basicConfig(level=logging.ERROR)
 
+db_handler = DatabaseHandler()
+helpers = Helpers(db_handler)
 admin_actions = AdminActions()
 
 
 def init_app(app):
     @app.route("/admin/dashboard")
     def admin_dashboard():
-        if "username" not in session or session.get("role") != "admin":
-            flash(ERROR_PLEASE_LOG_IN, "error")
+        if not helpers.check_admin_session():
             return redirect(url_for("index"))
 
         try:
@@ -44,8 +46,7 @@ def init_app(app):
 
     @app.route("/admin/users")
     def list_users():
-        if "username" not in session or session.get("role") != "admin":
-            flash(ERROR_PLEASE_LOG_IN, "error")
+        if not helpers.check_admin_session():
             return redirect(url_for("index"))
 
         try:
@@ -63,9 +64,9 @@ def init_app(app):
 
     @app.route("/admin/cars")
     def list_cars():
-        if "username" not in session or session.get("role") != "admin":
-            flash(ERROR_PLEASE_LOG_IN, "error")
+        if not helpers.check_admin_session():
             return redirect(url_for("index"))
+        
         try:
             cars = admin_actions.get_all_cars()
 
@@ -81,9 +82,9 @@ def init_app(app):
 
     @app.route("/admin/services")
     def list_services():
-        if "username" not in session or session.get("role") != "admin":
-            flash(ERROR_PLEASE_LOG_IN, "error")
+        if not helpers.check_admin_session():
             return redirect(url_for("index"))
+        
         try:
             services = admin_actions.get_all_services() or []
 
