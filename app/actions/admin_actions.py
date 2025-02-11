@@ -43,6 +43,14 @@ class AdminActions:
         except Exception as e:
             logging.error(f"Error in update_user: {str(e)}")
             return False
+    
+    def delete_user(self, user_id):
+        try:
+            with self.admin_db_handler as db:
+                return db.delete_user(user_id)
+        except Exception as e:
+            logging.error(f"Error in delete_user: {str(e)}")
+            return False
 
     def get_all_cars(self):
         try:

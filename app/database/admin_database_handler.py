@@ -42,6 +42,21 @@ class AdminDatabaseHandler(DatabaseHandler):
 
         return self.execute_commit(query, tuple(values))
 
+    def delete_user(self, user_id):
+        query_services = "DELETE FROM services WHERE car_id IN (SELECT car_id FROM cars WHERE user_id = %s)"
+        if not self.execute_commit(query_services, (user_id,)):
+            return False
+        
+        query_cars = "DELETE FROM cars WHERE user_id = %s"
+        if not self.execute_commit(query_cars, (user_id,)):
+            return False
+       
+        query_user = "DELETE FROM users WHERE user_id = %s"
+        if not self.execute_commit(query_user, (user_id,)):
+            return False
+        
+        return True
+
     def get_all_cars(self):
         query = """
             SELECT 

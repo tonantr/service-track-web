@@ -41,7 +41,7 @@
                     <td style="padding: 5px;">{{ user.email }}</td>
                     <td style="padding: 5px;">
                         <a href="{{ url_for('update_user', user_id=user.user_id) }}">Update</a> |
-                        <a href="#" onclick="return confirm('Are you sure?');">Delete</a>
+                        <a href="{{ url_for('delete_entity', entity='users', item_id=user.user_id) }}">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}

@@ -149,7 +149,7 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
         
         return render_template("update_user.html", user=user)
-
+      
     @app.route("/admin/cars")
     def list_cars():
         if not helpers.check_admin_session():
@@ -196,3 +196,43 @@ def init_app(app):
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
+
+    @app.route("/admin/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
+    def delete_entity(entity, item_id):
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+
+        if entity == "users":
+            item = helpers.get_user_by_id(item_id)
+            entity_name = "User"
+        elif entity == "cars":
+            pass
+        elif entity == "services":
+            pass
+        else:
+            flash(f"Invalid entity type: {entity}", "danger")
+            return redirect(url_for("list_entities", entity=entity))
+
+        if not item:
+            flash(f"{entity_name} not found.", "warning")
+            return redirect(url_for(f"list_{entity}"))
+        
+        if request.method == "POST":
+            try:
+                if entity == "users":
+                    if not admin_actions.delete_user(item_id):
+                        flash("Failed to delete user.", "danger")
+                        return redirect(url_for(f"list_{entity}"))
+                elif entity == "cars":
+                    pass
+                elif entity == "services":
+                    pass
+
+                return redirect(url_for(f"list_{entity}"))
+            
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+
+        return render_template("confirmation.html", entity=entity, item=item, entity_name=entity_name)
