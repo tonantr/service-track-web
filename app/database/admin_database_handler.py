@@ -16,6 +16,10 @@ class AdminDatabaseHandler(DatabaseHandler):
         query = "SELECT user_id, username, role, email FROM users"
         return self.fetch_all(query)
 
+    def add_user(self, username, email, password, role="user"):
+        query = "INSERT INTO users (username, password, email, role) VALUES (%s, %s, %s, %s)"
+        self.execute_commit(query, (username, password, email, role))
+
     def update_user(self, user_id, **kwargs):
         if not kwargs:
             raise ValueError("No fields to update")

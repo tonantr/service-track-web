@@ -19,7 +19,7 @@
         <h1>Manage Users</h1>
         <hr>
         <div style="margin-bottom: 15px;">
-            <a href="#" class="add-button">+ Add User</a>
+            <a href="{{ url_for('add_user') }}" class="add-button">+ Add User</a>
         </div>
         {% if users %}
         <table style="width: 100%; border-collapse: collapse;">

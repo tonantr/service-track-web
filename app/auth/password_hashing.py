@@ -1,7 +1,9 @@
 from bcrypt import hashpw, gensalt, checkpw
 
 def hash_password(password):
-    return hashpw(password.encode(), gensalt)
+    salt = gensalt()
+    hashed_password = hashpw(password.encode(), salt)
+    return hashed_password.decode('utf-8')
 
-def verify_password(password, hashed):
-    return checkpw(password.encode(), hashed.encode())
+def verify_password(password, hashed_password):
+    return checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))

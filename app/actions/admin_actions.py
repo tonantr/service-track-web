@@ -28,6 +28,14 @@ class AdminActions:
             logging.error(f"Error in get_all_users: {str(e)}")
             return None
 
+    def add_user(self, username, email, password, role):
+        try:
+            with self.admin_db_handler as db:
+                db.add_user(username, email, password, role)
+        except Exception as e:
+            logging.error(f"Error in add_user: {str(e)}")
+            return None
+
     def update_user(self, user_id, **kwargs):
         try:
             with self.admin_db_handler as db:

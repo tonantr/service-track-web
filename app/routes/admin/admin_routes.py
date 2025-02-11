@@ -9,6 +9,7 @@ from app.utils.constants import (
 from app.actions.admin_actions import AdminActions
 from app.database.database_handler import DatabaseHandler
 from app.utils.helpers import Helpers
+from app.utils.validators import validate_email, validate_password, validate_username
 from app.auth.password_hashing import hash_password
 import logging
 
@@ -63,6 +64,46 @@ def init_app(app):
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
+
+    @app.route("/admin/users/add", methods=["GET", "POST"])
+    def add_user():
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
+        if request.method == "POST":
+            try:
+                username = request.form.get("username")
+                role = request.form.get("role")
+                email = request.form.get("email")
+                password = request.form.get("password")
+
+                if not validate_username(username):
+                    flash("Username must be at least 3 characters.", "danger")
+                    return render_template("add_user.html")
+                
+                if not validate_email(email):
+                    flash("Invalid email format.", "danger")
+                    return render_template("add_user.html")
+                
+                if not validate_password(password):
+                    flash("Password must be at least 6 characters.", "danger")
+                    return render_template("add_user.html")
+
+                if helpers.check_if_username_or_email_exists(username, email):
+                    flash("Username or Email already exists.", "warning")
+                    return render_template("add_user.html")
+                
+                if password:
+                    hashed_password = hash_password(password)
+                
+                admin_actions.add_user(username, email, hashed_password, role)
+                return redirect(url_for("list_users")) 
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("add_user.html")
 
     @app.route("/admin/users/update/<int:user_id>", methods=["GET", "POST"])
     def update_user(user_id):
