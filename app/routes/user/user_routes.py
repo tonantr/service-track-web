@@ -10,7 +10,7 @@ def init_app(app):
             return redirect(url_for("index"))
 
         return render_template(
-            "user_dashboard.html",
+            "user/user_dashboard.html",
             logged_in_user=session["username"],
             role=session["role"],
         )
