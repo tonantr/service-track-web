@@ -45,14 +45,21 @@ class Helpers:
             return False
         return True
     
-    def check_if_username_or_email_exists(self, username, email):
+    def check_if_username_or_email_exists(self, username, email, exclude_user_id=None):
         try:
             query = "SELECT COUNT(*) FROM users WHERE username = %s OR email = %s"
-            with self.db_handler as db:
-                result = db.fetch_one(query, (username, email))
-                if result["COUNT(*)"] > 0:
-                    return True
-                return False
+
+            if exclude_user_id:
+                query += " AND user_id != %s"
+                with self.db_handler as db:
+                    result = db.fetch_one(query, (username, email, exclude_user_id))
+            else:
+                with self.db_handler as db:
+                    result = db.fetch_one(query, (username, email))
+
+            if result["COUNT(*)"] > 0:
+                return True
+            return False
         except Exception as e:
             logging.error(f"Error in load_user: {e}")
             raise Exception(f"An error occurred while checking username/email existence: {str(e)}")

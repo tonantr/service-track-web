@@ -32,7 +32,7 @@ class DatabaseHandler:
             self.cursor = self.connection.cursor(dictionary=True)
         except mysql.connector.Error as e:
             logging.error(f"Connection Error: {str(e)}")
-            print(f"Error: {str(e)}")
+            raise
 
     def close(self):
         try:
@@ -42,7 +42,7 @@ class DatabaseHandler:
                 self.connection.close()
         except mysql.connector.Error as e:
             logging.error(f"Close Error: {str(e)}")
-            print(f"Error: {str(e)}")
+            raise
 
     def __enter__(self):
         self.connect()
@@ -61,16 +61,17 @@ class DatabaseHandler:
             return self.cursor.fetchall()
         except mysql.connector.Error as e:
             logging.error(f"Query Error: {str(e)} | Query: {query} | Params: {params}")
-            print(f"Error: {str(e)}")
+            raise
 
     def execute_commit(self, query, params=None):
         # Execute a query and commit the changes (e.g. INSERT, UPDATE, DELETE)
         try:
             self.cursor.execute(query, params or ())
             self.connection.commit()
+            return True
         except mysql.connector.Error as e:
             logging.error(f"Commit Error: {str(e)} | Query: {query} | Params: {params}")
-            print(f"Error: {str(e)}")
+            raise
 
     def fetch_one(self, query, params=None):
         # Fetch a single row from a query
@@ -79,4 +80,4 @@ class DatabaseHandler:
             return self.cursor.fetchone()
         except mysql.connector.Error as e:
             logging.error(f"Fetch Error: {str(e)} | Query: {query} | Params: {params}")
-            print(f"Error: {str(e)}")
+            raise

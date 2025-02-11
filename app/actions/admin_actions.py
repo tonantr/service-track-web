@@ -31,18 +31,18 @@ class AdminActions:
     def add_user(self, username, email, password, role):
         try:
             with self.admin_db_handler as db:
-                db.add_user(username, email, password, role)
+                return db.add_user(username, email, password, role)
         except Exception as e:
             logging.error(f"Error in add_user: {str(e)}")
-            return None
+            return False
 
     def update_user(self, user_id, **kwargs):
         try:
             with self.admin_db_handler as db:
-                db.update_user(user_id, **kwargs)
+                return db.update_user(user_id, **kwargs)
         except Exception as e:
             logging.error(f"Error in update_user: {str(e)}")
-            return None
+            return False
 
     def get_all_cars(self):
         try:

@@ -95,8 +95,11 @@ def init_app(app):
                 
                 if password:
                     hashed_password = hash_password(password)
+
+                if not admin_actions.add_user(username, email, hashed_password, role):
+                    flash("Failed to add user.", "danger")
+                    return render_template("add_user.html")
                 
-                admin_actions.add_user(username, email, hashed_password, role)
                 return redirect(url_for("list_users")) 
             except Exception as e:
                 logging.error(f"Error occurred: {str(e)}") 
@@ -125,14 +128,20 @@ def init_app(app):
                     "password": request.form.get("password")
                 }
 
-                if helpers.check_if_username_or_email_exists(updated_data["username"], updated_data["email"]):
+                
+                if helpers.check_if_username_or_email_exists(updated_data["username"], updated_data["email"], exclude_user_id=user["user_id"]):
                     flash("Username or Email already exists.", "warning")
                     return render_template("update_user.html", user=user)
                 
                 if updated_data["password"]:
                     updated_data["password"] = hash_password(updated_data["password"])
                 
-                admin_actions.update_user(user_id, **updated_data)
+
+                if not admin_actions.update_user(user_id, **updated_data):
+                    flash("Failed to update user.", "danger")
+                    return render_template("update_user.html")
+                
+                return redirect(url_for("list_users")) 
             
             except Exception as e:
                 logging.error(f"Error occurred: {str(e)}") 
