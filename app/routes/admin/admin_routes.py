@@ -148,7 +148,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("admin/update_user.html", user=user)
+        return render_template("update_user.html", user=user)
       
     @app.route("/admin/cars")
     def list_cars():
