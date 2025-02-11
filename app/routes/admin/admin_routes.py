@@ -39,7 +39,7 @@ def init_app(app):
             return render_template("error.html", error_message=error_message)
 
         return render_template(
-            "admin_dashboard.html",
+            "admin/admin_dashboard.html",
             total_users=total_users,
             total_cars=total_cars,
             total_services=total_services,
@@ -106,7 +106,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("add_user.html")
+        return render_template("admin/add_user.html")
 
     @app.route("/admin/users/update/<int:user_id>", methods=["GET", "POST"])
     def update_user(user_id):
@@ -148,7 +148,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("update_user.html", user=user)
+        return render_template("admin/update_user.html", user=user)
       
     @app.route("/admin/cars")
     def list_cars():
