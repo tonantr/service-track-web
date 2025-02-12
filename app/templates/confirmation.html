@@ -1,8 +1,13 @@
 <h3>Are you sure you want to delete this {{ entity_name }}?</h3>
 <ul>
-    <li>ID: {{ item.user_id }}</li> 
-    <li>Name: {{ item.username }}</li> 
-    {% if entity_name == "Car" %}
+    {% if entity_name == "User" %}
+        <li>ID: {{ item.user_id }}</li> 
+        <li>Name: {{ item.username }}</li> 
+        <li>Role: {{ item.role }}</li> 
+        <li>Email: {{ item.email }}</li> 
+    {% elif entity_name == "Car" %}
+        <li>ID: {{ item.car_id }}</li> 
+        <li>Name: {{ item.name }}</li>
         <li>Model: {{ item.model }}</li>
         <li>Year: {{ item.year }}</li>
     {% elif entity_name == "Service" %}
@@ -11,7 +16,7 @@
     {% endif %}
 </ul>
 <form method="POST">
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="submit" style="width: 150px;">Delete</button>
 </form>
 <a href="{{ url_for('list_' + entity) }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">Cancel</a>
 

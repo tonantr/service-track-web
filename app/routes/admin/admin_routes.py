@@ -279,7 +279,8 @@ def init_app(app):
             item = helpers.get_user_by_id(item_id)
             entity_name = "User"
         elif entity == "cars":
-            pass
+            item = helpers.get_car_by_id(item_id)
+            entity_name = "Car"
         elif entity == "services":
             pass
         else:
@@ -297,7 +298,9 @@ def init_app(app):
                         flash("Failed to delete user.", "danger")
                         return redirect(url_for(f"list_{entity}"))
                 elif entity == "cars":
-                    pass
+                    if not admin_actions.delete_car(item_id):
+                        flash("Failed to delete car.", "danger")
+                        return redirect(url_for(f"list_{entity}"))
                 elif entity == "services":
                     pass
 
