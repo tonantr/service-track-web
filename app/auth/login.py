@@ -1,6 +1,6 @@
 import getpass
 import logging
-from app.auth.password_hashing import verify_password
+from app.auth.password_hashing import verify_password, is_password_plaintext, hash_password
 from app.utils.helpers import Helpers
 
 logging.basicConfig(
@@ -19,8 +19,14 @@ class Login:
     def authenticate(self, username, password):
         try:
             user = self.helpers.get_user_by_username(username)
+            
             if user:
                 stored_password = user["password"]
+                if is_password_plaintext(stored_password):
+                    hashed_password = hash_password(stored_password)
+                    self.helpers.update_password(username, hashed_password)
+                    stored_password = hashed_password
+
                 if verify_password(password, stored_password):
                     self.logged_in_user = username
                     self.role = user["role"]

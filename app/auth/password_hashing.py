@@ -7,3 +7,6 @@ def hash_password(password):
 
 def verify_password(password, hashed_password):
     return checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+
+def is_password_plaintext(password):
+        return len(password) < 60 

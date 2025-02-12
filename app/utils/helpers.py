@@ -78,3 +78,12 @@ class Helpers:
         except Exception as e:
             logging.error(f"Error in check_vin_exists: {e}")
             raise Exception(f"An error occurred while checking the vin: {str(e)}")
+    
+    def update_password(self, username, hashed_password):
+        try:
+            query = "UPDATE users SET password = %s WHERE username = %s"
+            with self.db_handler as db:
+                db.execute_commit(query, (hashed_password, username))
+        except Exception as e:
+            logging.error(f"Error in check_vin_exists: {e}")
+            raise Exception(f"An error occurred while checking the vin: {str(e)}")
