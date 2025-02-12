@@ -67,7 +67,6 @@ a:hover {
 }
 
 .logout {
-    background: red;
     padding: 10px 15px;
     border-radius: 5px;
     color: white;
@@ -104,3 +103,8 @@ a:hover {
     font-size: 18px;
     font-weight: bold;
 }
+
+button {
+    width: 150px;
+}
+

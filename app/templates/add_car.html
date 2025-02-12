@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Add Car</h1>
+        <hr>
+
+        <form method="POST">
+            {% if role == "admin" %}
+            <div class="user-section" style="margin-bottom: 20px;">
+                <label for="user_id">User Name:</label>
+                <select name="user_id" required>
+                    <option value="" disabled selected>--------------------</option>
+                    {% for user in users %}
+                    <option value="{{ user.user_id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+
+            <label for="name">Car Name:</label>
+            <input type="text" name="name" required value="{{ form_data.name if form_data else '' }}">
+
+            <label for="model">Model:</label>
+            <input type="text" name="model" required value="{{ form_data.model if form_data else '' }}">
+
+            <label for="year">Year:</label>
+            <input type="text" name="year" required pattern="\d{4}" title="Enter car year (YYYY)"
+                value="{{ form_data.year if form_data else '' }}">
+
+            <label for="vin">VIN:</label>
+            <input type="text" name="vin" required pattern="^[A-HJ-NPR-Z0-9]{17}$"
+                title="Enter a valid 17-character VIN" value="{{ form_data.vin if form_data else '' }}">
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+
+</html>

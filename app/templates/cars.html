@@ -19,7 +19,7 @@
         <h1>Manage Cars</h1>
         <hr>
         <div style="margin-bottom: 15px;">
-            <a href="#" class="add-button">+ Add Car</a>
+            <a href="{{ url_for('add_car') }}" class="add-button">+ Add Car</a>
         </div>
         {% if cars %}
         <table style="width: 100%; border-collapse: collapse;">

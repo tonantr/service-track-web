@@ -168,6 +168,40 @@ def init_app(app):
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
 
+    @app.route("/admin/cars/add", methods=["GET", "POST"])
+    def add_car():
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
+        users = admin_actions.get_all_users()
+        
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "user_id": request.form.get("user_id"),
+                    "name": request.form.get("name"),
+                    "model": request.form.get("model"),
+                    "year": request.form.get("year"),
+                    "vin": request.form.get("vin")
+                }
+
+                if helpers.check_vin_exists(form_data["vin"]):
+                    flash("VIN already exists.", "warning")
+                    return render_template("add_car.html", role="admin", users=users, form_data=form_data)
+
+                if not admin_actions.add_car(**form_data):
+                    flash("Failed to add car.", "danger")
+                    return render_template("add_car.html", role="admin", users=users, form_data=form_data)
+                
+                return redirect(url_for("list_cars"))
+                
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("add_car.html", role="admin", users=users)
+
     @app.route("/admin/services")
     def list_services():
         if not helpers.check_admin_session():

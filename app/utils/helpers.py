@@ -63,3 +63,15 @@ class Helpers:
         except Exception as e:
             logging.error(f"Error in load_user: {e}")
             raise Exception(f"An error occurred while checking username/email existence: {str(e)}")
+    
+    def check_vin_exists(self, vin):
+        try:
+            query = "SELECT COUNT(*) FROM cars WHERE vin = %s"
+            with self.db_handler as db:
+                result = db.fetch_one(query, (vin,))
+                if result["COUNT(*)"] > 0:
+                    return True
+            return False
+        except Exception as e:
+            logging.error(f"Error in check_vin_exists: {e}")
+            raise Exception(f"An error occurred while checking the vin: {str(e)}")

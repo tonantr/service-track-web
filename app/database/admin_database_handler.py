@@ -71,6 +71,21 @@ class AdminDatabaseHandler(DatabaseHandler):
         """
         return self.fetch_all(query)
 
+    def add_car(self, **kwargs):
+        if not kwargs:
+            raise ValueError("No fields to add")
+        
+        fields = []
+        values = []
+
+        for key, value in kwargs.items():
+            fields.append(key)
+            values.append(value)
+        
+        query = f"INSERT INTO cars ({','.join(fields)}) VALUES ({','.join(['%s'] * len(values))})"
+        
+        return self.execute_commit(query, tuple(values))
+
     def get_all_services(self):
         query = """
             SELECT 

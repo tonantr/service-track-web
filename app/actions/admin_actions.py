@@ -66,6 +66,14 @@ class AdminActions:
             logging.error(f"Error in get_all_cars: {str(e)}")
             return None
     
+    def add_car(self, **kwargs):
+        try:
+            with self.admin_db_handler as db:
+                return db.add_car(**kwargs)
+        except Exception as e:
+            logging.error(f"Error in add_car: {str(e)}")
+            return False
+
     def get_all_services(self):
         try:
             with self.admin_db_handler as db:
