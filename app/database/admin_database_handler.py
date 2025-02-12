@@ -63,7 +63,8 @@ class AdminDatabaseHandler(DatabaseHandler):
             c.car_id, 
             c.name, 
             c.model, 
-            c.year, 
+            c.year,
+            c.vin, 
             u.username AS owner
         FROM cars c
         LEFT JOIN users u ON c.user_id = u.user_id
