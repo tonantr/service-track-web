@@ -44,7 +44,7 @@
                     <td style="padding: 5px;">{{ car.vin }}</td>
                     <td style="padding: 5px;">{{ car.owner }}</td>
                     <td style="padding: 5px;">
-                        <a href="#">Update</a> |
+                        <a href="{{ url_for('update_car', car_id=car.car_id) }}">Update</a> |
                         <a href="#" onclick="return confirm('Are you sure?');">Delete</a>
                     </td>
                 </tr>

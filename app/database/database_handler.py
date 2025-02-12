@@ -14,7 +14,7 @@ logging.basicConfig(
 
 class DatabaseHandler:
     def __init__(self, host=None, user=None, password=None, database=None):
-        self.host = host or os.getenv("MYSQL_HOST_WINDOWS")
+        self.host = host or os.getenv("MYSQL_HOST_LOCAL_MAC")
         self.user = user or os.getenv("MYSQL_USER")
         self.password = password or os.getenv("MYSQL_PASSWORD")
         self.database = database or os.getenv("MYSQL_DATABASE")

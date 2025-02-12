@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Update Car</h1>
+        <hr>
+
+        <form method="POST">
+            {% if role == "admin" %}
+            <div class="user-section" style="margin-bottom: 20px;">
+                <select name="user_id" required>
+                    <option value="" disabled selected>--------select--------</option>
+                    {% for user in users %}
+                    <option value="{{ user.user_id }}" {% if user.user_id == car.user_id %}selected{% endif %}>{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+
+            <input type="text" name="name" placeholder="Name" value="{{ car.name if car.name else '' }}">
+
+            <input type="text" name="model" placeholder="Model" value="{{ car.model if car.model else '' }}">
+
+            <input type="text" name="year" placeholder="Year (yyyy)" value="{{ car.year if car.year else '' }}" pattern="\d{4}" title="Enter a valid year (yyyy)" required>
+
+            <input type="text" name="vin" value="{{ car.vin }}" readonly>
+
+            <button type="submit">Update</button>
+
+        </form>
+
+        <a href="{{ url_for('list_cars') }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">Go back to the list</a>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 from app.database.database_handler import DatabaseHandler
+from app.utils.constants import ERROR_NO_FIELDS_TO_ADD
 import logging
 
 
@@ -22,7 +23,7 @@ class AdminDatabaseHandler(DatabaseHandler):
 
     def update_user(self, user_id, **kwargs):
         if not kwargs:
-            raise ValueError("No fields to update")
+            raise ValueError(ERROR_NO_FIELDS_TO_ADD)
         
         if "role" not in kwargs:
             kwargs["role"] = "user"
@@ -74,7 +75,7 @@ class AdminDatabaseHandler(DatabaseHandler):
 
     def add_car(self, **kwargs):
         if not kwargs:
-            raise ValueError("No fields to add")
+            raise ValueError(ERROR_NO_FIELDS_TO_ADD)
         
         fields = []
         values = []
@@ -85,6 +86,21 @@ class AdminDatabaseHandler(DatabaseHandler):
         
         query = f"INSERT INTO cars ({','.join(fields)}) VALUES ({','.join(['%s'] * len(values))})"
         
+        return self.execute_commit(query, tuple(values))
+    
+    def update_car(self, car_id, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS_TO_ADD)
+        
+        fields = []
+        values = []
+
+        for key, value in kwargs.items():
+            fields.append(f"{key}=%s")
+            values.append(value)
+        
+        query = f"UPDATE cars SET {','.join(fields)} WHERE car_id = %s"
+        values.append(car_id)
         return self.execute_commit(query, tuple(values))
 
     def get_all_services(self):

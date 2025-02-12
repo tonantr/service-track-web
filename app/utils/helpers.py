@@ -19,25 +19,28 @@ class Helpers:
         try:
             query = "SELECT * FROM users WHERE username = %s"
             with self.db_handler as db:
-                user = db.fetch_one(query, (username,))
-                if not user:
-                    return None
-                return user
+                return db.fetch_one(query, (username,))
         except Exception as e:
-            logging.error(f"Error in load_user: {e}")
+            logging.error(f"Error in get_user_by_username: {e}")
             raise Exception(f"An error occurred while loading the user: {str(e)}")
 
     def get_user_by_id(self, user_id):
         try:
             query = "SELECT * FROM users WHERE user_id = %s"
             with self.db_handler as db:
-                user = db.fetch_one(query, (user_id,))
-                if not user:
-                    return None
-                return user
+                return db.fetch_one(query, (user_id,))
         except Exception as e:
-            logging.error(f"Error in load_user: {e}")
+            logging.error(f"Error in get_user_by_id: {e}")
             raise Exception(f"An error occurred while loading the user: {str(e)}")
+
+    def get_car_by_id(self, car_id):
+        try:
+            query = "SELECT * FROM cars WHERE car_id = %s"
+            with self.db_handler as db:
+                return db.fetch_one(query, (car_id,))
+        except Exception as e:
+            logging.error(f"Error in get_car_by_id: {e}")
+            raise Exception(f"An error occurred while loading the car: {str(e)}")
 
     def check_admin_session(self):
         if "username" not in session or session.get("role") != "admin":
@@ -61,7 +64,7 @@ class Helpers:
                 return True
             return False
         except Exception as e:
-            logging.error(f"Error in load_user: {e}")
+            logging.error(f"Error in check_if_username_or_email_exists: {e}")
             raise Exception(f"An error occurred while checking username/email existence: {str(e)}")
     
     def check_vin_exists(self, vin):

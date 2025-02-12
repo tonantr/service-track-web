@@ -4,6 +4,7 @@ from app.utils.constants import (
     ERROR_USER_NOT_FOUND,
     ERROR_FETCHING_DATA,
     ERROR_NO_CARS_FOUND,
+    ERROR_CAR_NOT_FOUND,
     ERROR_NO_SERVICES_FOUND,
 )
 from app.actions.admin_actions import AdminActions
@@ -54,7 +55,6 @@ def init_app(app):
 
         try:
             users = admin_actions.get_all_users()
-
             if not users:
                 flash(ERROR_NO_USERS_FOUND, "warning")
                 return redirect(url_for("admin_dashboard"))
@@ -114,7 +114,6 @@ def init_app(app):
             return redirect(url_for("index"))
         
         user = helpers.get_user_by_id(user_id)
-
         if not user:
             flash(ERROR_USER_NOT_FOUND, "warning")
             return redirect(url_for("list_users"))
@@ -128,7 +127,6 @@ def init_app(app):
                     "password": request.form.get("password")
                 }
 
-                
                 if helpers.check_if_username_or_email_exists(updated_data["username"], updated_data["email"], exclude_user_id=user["user_id"]):
                     flash("Username or Email already exists.", "warning")
                     return render_template("update_user.html", user=user)
@@ -174,6 +172,9 @@ def init_app(app):
             return redirect(url_for("index"))
         
         users = admin_actions.get_all_users()
+        if not users:
+                flash(ERROR_NO_USERS_FOUND, "warning")
+                return redirect(url_for("list_cars"))
         
         if request.method == "POST":
             try:
@@ -201,6 +202,44 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
         
         return render_template("add_car.html", role="admin", users=users)
+
+    @app.route("/admin/cars/update/<int:car_id>", methods=["GET", "POST"])
+    def update_car(car_id):
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
+        users = admin_actions.get_all_users()
+        if not users:
+                flash(ERROR_NO_USERS_FOUND, "warning")
+                return redirect(url_for("list_cars"))
+        
+        car = helpers.get_car_by_id(car_id)
+        if not car:
+            flash(ERROR_CAR_NOT_FOUND, "danger")
+            return redirect(url_for("list_cars"))
+        
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "user_id": request.form.get("user_id"),
+                    "name": request.form.get("name"),
+                    "model": request.form.get("model"),
+                    "year": request.form.get("year"),
+                    "vin": request.form.get("vin")
+                }
+
+                if not admin_actions.update_car(car_id, **form_data):
+                    flash("Failed to update car.", "danger")
+                    return render_template("update_car.html", role="admin", users=users, car=car)
+                
+                return redirect(url_for("list_cars")) 
+
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+            
+        return render_template("update_car.html", role="admin", users=users, car=car)
 
     @app.route("/admin/services")
     def list_services():
