@@ -14,10 +14,12 @@ logging.basicConfig(
 
 class DatabaseHandler:
     def __init__(self, host=None, user=None, password=None, database=None):
-        self.host = host or os.getenv("MYSQL_HOST_LOCAL_MAC")
+        self.host = os.getenv("MYSQL_HOST_REMOTE")  
+        self.port = os.getenv("MYSQL_PORT_REMOTE")  
         self.user = user or os.getenv("MYSQL_USER")
         self.password = password or os.getenv("MYSQL_PASSWORD")
         self.database = database or os.getenv("MYSQL_DATABASE")
+
         self.connection = None
         self.cursor = None
 
@@ -25,6 +27,7 @@ class DatabaseHandler:
         try:
             self.connection = mysql.connector.connect(
                 host=self.host,
+                port=self.port,
                 user=self.user,
                 password=self.password,
                 database=self.database,
