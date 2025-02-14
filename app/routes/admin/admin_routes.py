@@ -366,7 +366,8 @@ def init_app(app):
             item = helpers.get_car_by_id(item_id)
             entity_name = "Car"
         elif entity == "services":
-            pass
+            item = helpers.get_service_by_id(item_id)
+            entity_name = "Service"
         else:
             flash(f"Invalid entity type: {entity}", "danger")
             return redirect(url_for("list_entities", entity=entity))
@@ -386,7 +387,9 @@ def init_app(app):
                         flash("Failed to delete car.", "danger")
                         return redirect(url_for(f"list_{entity}"))
                 elif entity == "services":
-                    pass
+                    if not admin_actions.delete_service(item_id):
+                        flash("Failed to delete service.", "danger")
+                        return redirect(url_for(f"list_{entity}"))
 
                 return redirect(url_for(f"list_{entity}"))
             

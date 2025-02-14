@@ -26,8 +26,12 @@
                 <li><strong>Model:</strong> {{ item.model }}</li>
                 <li><strong>Year:</strong> {{ item.year }}</li>
             {% elif entity_name == "Service" %}
+                <li><strong>ID:</strong> {{ item.service_id }}</li> 
+                <li><strong>Mileage:</strong> {{ item.mileage }}</li>
                 <li><strong>Service Type:</strong> {{ item.service_type }}</li>
-                <li><strong>Date:</strong> {{ item.date }}</li>
+                <li><strong>Service Date:</strong> {{ item.service_date }}</li>
+                <li><strong>Next Service Date:</strong> {{ item.next_service_date }}</li>
+                <li><strong>Cost:</strong> {{ item.cost }}</li>
             {% endif %}
         </ul>
 
