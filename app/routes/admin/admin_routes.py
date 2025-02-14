@@ -6,6 +6,7 @@ from app.utils.constants import (
     ERROR_NO_CARS_FOUND,
     ERROR_CAR_NOT_FOUND,
     ERROR_NO_SERVICES_FOUND,
+    ERROR_SERVICE_NOT_FOUND
 )
 from app.actions.admin_actions import AdminActions
 from app.database.database_handler import DatabaseHandler
@@ -283,13 +284,13 @@ def init_app(app):
         if request.method == "POST":
             try:
                 form_data = {
-                    "car_id": request.form.get("car_id"),
-                    "mileage": request.form.get("mileage"),
-                    "service_type": request.form.get("service_type"),
-                    "service_date": request.form.get("service_date"),
-                    "next_service_date": request.form.get("next_service_date"),
-                    "cost": request.form.get("cost"),
-                    "notes": request.form.get("notes")
+                    "car_id": request.form.get("car_id").strip(),
+                    "mileage": request.form.get("mileage").strip(),
+                    "service_type": request.form.get("service_type").strip(),
+                    "service_date": request.form.get("service_date").strip(),
+                    "next_service_date": request.form.get("next_service_date").strip(),
+                    "cost": request.form.get("cost").strip(),
+                    "notes": request.form.get("notes").strip()
                 }
 
                 form_data["car_id"] = int(form_data["car_id"])
@@ -311,6 +312,47 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
         
         return render_template("add_service.html", role="admin", cars=cars)
+
+    @app.route("/admin/services/update/<int:service_id>", methods=["GET", "POST"])
+    def update_service(service_id):
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
+        service = helpers.get_service_by_id(service_id)
+        if not service:
+            flash(ERROR_SERVICE_NOT_FOUND, "danger")
+            return redirect(url_for("list_services"))
+        
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "car_id": request.form.get("car_id").strip(),
+                    "mileage": request.form.get("mileage").strip(),
+                    "service_type": request.form.get("service_type").strip(),
+                    "service_date": request.form.get("service_date").strip(),
+                    "next_service_date": request.form.get("next_service_date").strip(),
+                    "cost": request.form.get("cost").strip(),
+                    "notes": request.form.get("notes").strip()
+                }
+
+                form_data["mileage"] = int(form_data["mileage"]) if form_data["mileage"] else None
+                form_data["cost"] = float(form_data["cost"]) if form_data["cost"] else None
+
+                if not form_data["next_service_date"]:
+                    form_data["next_service_date"] = None 
+                
+                if not admin_actions.update_service(service_id, **form_data):
+                    flash("Failed to update service.", "danger")
+                    return render_template("update_service.html", role="admin", service=service, form_data=form_data)
+                
+                return redirect(url_for("list_services"))
+
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+
+        return render_template("update_service.html", role="admin", service=service)
 
     @app.route("/admin/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
     def delete_entity(entity, item_id):

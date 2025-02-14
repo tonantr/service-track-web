@@ -141,6 +141,17 @@ class AdminDatabaseHandler(DatabaseHandler):
         query = f"INSERT INTO services ({','.join(fields)}) VALUES ({', '.join(['%s'] * len(values))})"
         return self.execute_commit(query, tuple(values))
 
+    def update_service(self, service_id, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS)
+        
+        fields = [f"{key} = %s" for key in kwargs.keys()]
+        values = list(kwargs.values())
+
+        query = f"UPDATE services SET {', '.join(fields)} WHERE service_id = %s"
+        values.append(service_id)
+        return self.execute_commit(query, tuple(values))
+
     def get_total_users(self):
         query = "SELECT COUNT(*) FROM users"
         result = self.fetch_one(query)

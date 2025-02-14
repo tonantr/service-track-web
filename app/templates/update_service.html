@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Update Service</h1>
+        <hr>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="service_id">Service ID</label>
+                </div>
+                <input type="text" id="service_id" name="service_id" value="{{ service.service_id }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="car_id">Car ID</label>
+                </div>
+                <input type="text" id="car_id" name="car_id" value="{{ service.car_id }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="mileage">Mileage</label>
+                </div>
+                <input type="number" id="mileage" name="mileage" placeholder="Enter mileage" required
+                    value="{{ service.mileage if service.mileage else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="service_type">Service Type</label>
+                </div>
+                <input type="text" id="service_type" name="service_type" placeholder="Enter service type" required
+                    value="{{ service.service_type if service.service_type else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="service_date">Service Date</label>
+                </div>
+                <input type="date" id="service_date" name="service_date" required
+                    value="{{ service.service_date if service.service_date else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="next_service_date">Next Service Date</label>
+                </div>
+                <input type="date" id="next_service_date" name="next_service_date"
+                    value="{{ service.next_service_date if service.next_service_date else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="cost">Cost</label>
+                </div>
+                <input type="number" id="cost" name="cost" placeholder="Enter cost" required step="0.01"
+                    value="{{ service.cost if service.cost else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="notes">Additional Notes</label>
+                </div>
+                <textarea id="notes" name="notes" placeholder="Enter additional notes"
+                    required>{{ service.notes if service.notes else ''  }}</textarea>
+            </div>
+
+            <button type="submit">Update</button>
+
+        </form>
+
+        <a href="{{ url_for('list_services') }}" class="btn btn-secondary"
+            style="display: inline-block; margin-top: 20px;">Go back</a>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+
+</html>

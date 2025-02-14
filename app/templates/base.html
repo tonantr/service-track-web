@@ -20,13 +20,11 @@
     </div>
 
     <div class="container">
-        <!-- Page-specific content will be inserted here -->
         {% block content %}{% endblock %}
     </div>
 
     <script>
         $(document).ready(function() {
-            // Apply DataTables to all tables
             $('table').DataTable({
                 "paging": true,
                 "searching": true,

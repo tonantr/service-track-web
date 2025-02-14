@@ -112,6 +112,14 @@ class AdminActions:
             logging.error(f"Error in add_service: {str(e)}")
             return False
 
+    def update_service(self, service_id, **kwargs):
+        try:
+            with self.admin_db_handler as db:
+                return db.update_service(service_id, **kwargs)
+        except Exception as e:
+            logging.error(f"Error in update_service: {str(e)}")
+            return False
+
     def get_total_users(self):
         try:
             with self.admin_db_handler as db:

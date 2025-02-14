@@ -42,6 +42,15 @@ class Helpers:
             logging.error(f"Error in get_car_by_id: {e}")
             raise Exception(f"An error occurred while loading the car: {str(e)}")
 
+    def get_service_by_id(self, service_id):
+        try:
+            query = "SELECT * FROM services WHERE service_id = %s"
+            with self.db_handler as db:
+                return db.fetch_one(query, (service_id,))
+        except Exception as e:
+            logging.error(f"Error in get_service_by_id: {e}")
+            raise Exception(f"An error occurred while loading the service: {str(e)}")
+
     def check_admin_session(self):
         if "username" not in session or session.get("role") != "admin":
             flash(ERROR_PLEASE_LOG_IN, "error")

@@ -123,7 +123,6 @@ button {
 }
 
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .stats-container {
         flex-direction: column;
