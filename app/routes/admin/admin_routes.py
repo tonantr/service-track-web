@@ -62,7 +62,7 @@ def init_app(app):
                 flash(ERROR_NO_USERS_FOUND, "warning")
                 return redirect(url_for("admin_dashboard"))
 
-            return render_template("users.html", users=users)
+            return render_template("admin/users.html", users=users)
         except Exception as e:
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
@@ -163,7 +163,7 @@ def init_app(app):
                 flash(ERROR_NO_CARS_FOUND, "warning")
                 return redirect(url_for("admin_dashboard"))
 
-            return render_template("cars.html", cars=cars)
+            return render_template("admin/cars.html", cars=cars)
         except Exception as e:
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
@@ -265,7 +265,7 @@ def init_app(app):
                 service["notes"] = service["notes"] or "N/A"
 
             return render_template(
-                "services.html", services=services
+                "admin/services.html", services=services
             )
 
         except Exception as e:
