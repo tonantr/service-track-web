@@ -149,7 +149,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("update_user.html", user=user)
+        return render_template("admin/update_user.html", user=user)
       
     @app.route("/admin/cars")
     def list_cars():
@@ -242,7 +242,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
             
-        return render_template("update_car.html", role="admin", users=users, car=car)
+        return render_template("admin/update_car.html", role="admin", users=users, car=car)
 
     @app.route("/admin/services")
     def list_services():
@@ -354,7 +354,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
 
-        return render_template("update_service.html", role="admin", service=service)
+        return render_template("admin/update_service.html", role="admin", service=service)
 
     @app.route("/admin/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
     def delete_entity(entity, item_id):
