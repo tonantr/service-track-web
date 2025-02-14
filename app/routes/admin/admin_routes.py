@@ -27,7 +27,7 @@ admin_actions = AdminActions()
 def init_app(app):
     @app.route("/admin/dashboard")
     def admin_dashboard():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
 
         try:
@@ -53,7 +53,7 @@ def init_app(app):
 
     @app.route("/admin/users")
     def list_users():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
 
         try:
@@ -70,7 +70,7 @@ def init_app(app):
 
     @app.route("/admin/users/add", methods=["GET", "POST"])
     def add_user():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         if request.method == "POST":
@@ -113,7 +113,7 @@ def init_app(app):
 
     @app.route("/admin/users/update/<int:user_id>", methods=["GET", "POST"])
     def update_user(user_id):
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         user = helpers.get_user_by_id(user_id)
@@ -153,7 +153,7 @@ def init_app(app):
       
     @app.route("/admin/cars")
     def list_cars():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         try:
@@ -171,7 +171,7 @@ def init_app(app):
 
     @app.route("/admin/cars/add", methods=["GET", "POST"])
     def add_car():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         users = admin_actions.get_all_users()
@@ -208,7 +208,7 @@ def init_app(app):
 
     @app.route("/admin/cars/update/<int:car_id>", methods=["GET", "POST"])
     def update_car(car_id):
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         users = admin_actions.get_all_users()
@@ -246,7 +246,7 @@ def init_app(app):
 
     @app.route("/admin/services")
     def list_services():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         try:
@@ -275,7 +275,7 @@ def init_app(app):
 
     @app.route("/admin/services/add", methods=["GET", "POST"])
     def add_service():
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         cars = admin_actions.get_all_cars()
@@ -317,7 +317,7 @@ def init_app(app):
 
     @app.route("/admin/services/update/<int:service_id>", methods=["GET", "POST"])
     def update_service(service_id):
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
         
         service = helpers.get_service_by_id(service_id)
@@ -358,7 +358,7 @@ def init_app(app):
 
     @app.route("/admin/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
     def delete_entity(entity, item_id):
-        if not helpers.check_admin_session():
+        if not Helpers.check_admin_session():
             return redirect(url_for("index"))
 
         if entity == "users":
@@ -404,6 +404,9 @@ def init_app(app):
     
     @app.route("/admin/export/csv", methods=["GET", "POST"])
     def export_csv(export_type="users"):
+        if not Helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
         if request.method == "POST":
             export_type = request.form.get("export_type")
 

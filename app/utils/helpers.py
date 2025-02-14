@@ -52,11 +52,20 @@ class Helpers:
             logging.error(f"Error in get_service_by_id: {e}")
             raise Exception(f"An error occurred while loading the service: {str(e)}")
 
-    def check_admin_session(self):
+    @staticmethod
+    def check_admin_session():
         if "username" not in session or session.get("role") != "admin":
             flash(ERROR_PLEASE_LOG_IN, "error")
             return False
         return True
+    
+    @staticmethod
+    def check_user_session():
+        if "username" not in session or session.get("role") not in ["admin", "user"]:
+            flash(ERROR_PLEASE_LOG_IN, "error")
+            return False
+        return True
+
     
     def check_if_username_or_email_exists(self, username, email, exclude_user_id=None):
         try:
