@@ -1,26 +1,44 @@
-<h3>Are you sure you want to delete this {{ entity_name }}?</h3>
+<!DOCTYPE html>
+<html lang="en">
 
-<ul>
-    {% if entity_name == "User" %}
-        <li>ID: {{ item.user_id }}</li> 
-        <li>Name: {{ item.username }}</li> 
-        <li>Role: {{ item.role }}</li> 
-        <li>Email: {{ item.email }}</li> 
-    {% elif entity_name == "Car" %}
-        <li>ID: {{ item.car_id }}</li> 
-        <li>Name: {{ item.name }}</li>
-        <li>Model: {{ item.model }}</li>
-        <li>Year: {{ item.year }}</li>
-    {% elif entity_name == "Service" %}
-        <li>Service Type: {{ item.service_type }}</li>
-        <li>Date: {{ item.date }}</li>
-    {% endif %}
-</ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+</head>
 
-<form method="POST">
-    <button type="submit">Delete</button>
-</form>
+<body>
 
-<a href="{{ url_for('list_' + entity) }}" class="btn btn-secondary">Cancel</a>
+    <div class="container">
+        <h3>Are you sure you want to delete this {{ entity_name }}?</h3>
 
+        <ul>
+            {% if entity_name == "User" %}
+                <li><strong>ID:</strong> {{ item.user_id }}</li> 
+                <li><strong>Name:</strong> {{ item.username }}</li> 
+                <li><strong>Role:</strong> {{ item.role }}</li> 
+                <li><strong>Email:</strong> {{ item.email }}</li> 
+            {% elif entity_name == "Car" %}
+                <li><strong>ID:</strong> {{ item.car_id }}</li> 
+                <li><strong>Name:</strong> {{ item.name }}</li>
+                <li><strong>Model:</strong> {{ item.model }}</li>
+                <li><strong>Year:</strong> {{ item.year }}</li>
+            {% elif entity_name == "Service" %}
+                <li><strong>Service Type:</strong> {{ item.service_type }}</li>
+                <li><strong>Date:</strong> {{ item.date }}</li>
+            {% endif %}
+        </ul>
 
+        <div class="form-actions">
+            <form method="POST">
+                <button type="submit">Delete</button>
+            </form>
+            <a href="{{ url_for('list_' + entity) }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">Go back</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

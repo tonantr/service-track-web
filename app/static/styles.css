@@ -103,6 +103,7 @@ button {
     border: none; 
     text-align: center;
     display: inline-block;
+    margin-top: 15px;
 }
 
 .btn-secondary {
