@@ -28,10 +28,11 @@
             {% elif entity_name == "Service" %}
                 <li><strong>ID:</strong> {{ item.service_id }}</li> 
                 <li><strong>Mileage:</strong> {{ item.mileage }}</li>
-                <li><strong>Service Type:</strong> {{ item.service_type }}</li>
+                <li><strong>Service Type:</strong> {{ item.service_type[:30] ~ '...' if item.service_type|length > 30 else item.service_type }}</li>
                 <li><strong>Service Date:</strong> {{ item.service_date }}</li>
                 <li><strong>Next Service Date:</strong> {{ item.next_service_date }}</li>
                 <li><strong>Cost:</strong> {{ item.cost }}</li>
+                <li><strong>Notes:</strong> {{ item.notes[:50] ~ '...' if item.notes|length > 50 else item.notes }}</li>
             {% endif %}
         </ul>
 
