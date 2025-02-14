@@ -15,7 +15,11 @@
 <body>
 
     <div class="navbar">
-        <a href="/admin/dashboard">Dashboard</a>
+        {% if session['role'] == 'admin' %}
+            <a href="/admin/dashboard">Dashboard</a>
+        {% elif session['role'] == 'user' %}
+            <a href="/user/dashboard">Dashboard</a>
+        {% endif %}
         <a href="/logout" class="logout">Logout</a>
     </div>
 

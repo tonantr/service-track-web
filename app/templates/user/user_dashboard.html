@@ -17,9 +17,9 @@
 
     <div class="navbar">
         <div>
-            <a href="#">Dashboard</a>
+            <a href="/user/dashboard">Dashboard</a>
             <a href="#">My Profile</a>
-            <a href="#">My Cars</a>
+            <a href="/user/cars">Cars</a>
             <a href="#">Service History</a>
         </div>
         <a href="/logout" class="logout">Logout</a>
@@ -46,7 +46,6 @@
                     <th style="padding: 5px; text-align: left;">Model</th>
                     <th style="padding: 5px; text-align: left;">Year</th>
                     <th style="padding: 5px; text-align: left;">VIN</th>
-                    <th style="padding: 5px; text-align: left;">Owner</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,7 +56,6 @@
                     <td style="padding: 5px;">{{ car.model }}</td>
                     <td style="padding: 5px;">{{ car.year }}</td>
                     <td style="padding: 5px;">{{ car.vin }}</td>
-                    <td style="padding: 5px;">{{ car.owner }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

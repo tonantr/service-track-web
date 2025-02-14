@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My Cars</h1>
+    <hr>
+    <div style="margin-bottom: 15px;">
+        <a href="#" class="add-button">+ Add Car</a>
+    </div>
+    {% if cars %}
+    <table id="carsTable" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="padding: 5px; text-align: left;">ID</th>
+                <th style="padding: 5px; text-align: left;">Name</th>
+                <th style="padding: 5px; text-align: left;">Model</th>
+                <th style="padding: 5px; text-align: left;">Year</th>
+                <th style="padding: 5px; text-align: left;">VIN</th>
+                <th style="padding: 5px; text-align: left;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+            <tr>
+                <td style="padding: 5px;">{{ car.car_id }}</td>
+                <td style="padding: 5px;">{{ car.name }}</td>
+                <td style="padding: 5px;">{{ car.model }}</td>
+                <td style="padding: 5px;">{{ car.year }}</td>
+                <td style="padding: 5px;">{{ car.vin }}</td>
+                <td style="padding: 5px;">
+                    <a href="#">Update</a> |
+                    <a href="#">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">Go back</a>
+
+    {% else %}
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% endif %}
+{% endblock %}
