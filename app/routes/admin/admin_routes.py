@@ -407,11 +407,10 @@ def init_app(app):
         if request.method == "POST":
             export_type = request.form.get("export_type")
 
-        downloads_folder = helpers.get_downloads_folder()
-        file_name = f"{export_type}_adm.csv"
-        file_path = os.path.join(downloads_folder, file_name)
+            downloads_folder = helpers.get_downloads_folder()
+            file_name = f"{export_type}_adm.csv"
+            file_path = os.path.join(downloads_folder, file_name)
 
-        if request.method == "POST":
             try:
                 data, headers = [], []
                 if export_type == "users":
