@@ -71,3 +71,20 @@ def init_app(app):
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
+    
+    @app.route("/user/profile")
+    def get_profile():
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        try:
+            user = helpers.get_user_by_username(session["username"])
+            if not user:
+                flash(ERROR_USER_NOT_FOUND, "danger")
+                return redirect(url_for("index"))
+            
+            return render_template("user/user_profile.html", user=user)
+        except Exception as e:
+            logging.error(f"Error occurred: {str(e)}") 
+            error_message = f"An error occurred: {str(e)}"
+            return render_template("error.html", error_message=error_message)
