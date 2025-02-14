@@ -12,3 +12,11 @@ logging.basicConfig(
 class UserDatabaseHandler(DatabaseHandler):
     def __init__(self):
         super().__init__()
+    
+    def get_cars_by_user_id(self, userid):
+        query = """
+        SELECT car_id, user_id, name, model, year, vin 
+        FROM cars 
+        WHERE user_id = %s
+        """
+        return self.fetch_all(query, (userid,))

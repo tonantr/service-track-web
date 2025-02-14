@@ -66,7 +66,6 @@ class Helpers:
             return False
         return True
 
-    
     def check_if_username_or_email_exists(self, username, email, exclude_user_id=None):
         try:
             query = "SELECT COUNT(*) FROM users WHERE username = %s OR email = %s"

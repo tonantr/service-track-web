@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSM</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -27,23 +32,51 @@
         <div class="dashboard-card">
             <h2>Overview</h2>
             <p>Manage your cars and service history from this dashboard.</p>
+            <p>For full details, please export to a <a href="#" class="csv">CSV file.</a></p>
         </div>
 
-        <!-- Statistics Section -->
-        <div class="stats-container">
-            <div class="stats-box">
-                <h2>My Cars</h2>
-                <p>{{ user_cars }}</p>
-            </div>
-            <div class="stats-box">
-                <h2>Pending Services</h2>
-                <p>{{ pending_services }}</p>
-            </div>
-            <div class="stats-box">
-                <h2>Completed Services</h2>
-                <p>{{ completed_services }}</p>
-            </div>
-        </div>
+        <h2>My Cars</h2>
+
+        {% if cars %}
+        <table id="carsTable" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px; text-align: left;">ID</th>
+                    <th style="padding: 5px; text-align: left;">Name</th>
+                    <th style="padding: 5px; text-align: left;">Model</th>
+                    <th style="padding: 5px; text-align: left;">Year</th>
+                    <th style="padding: 5px; text-align: left;">VIN</th>
+                    <th style="padding: 5px; text-align: left;">Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in cars %}
+                <tr>
+                    <td style="padding: 5px;">{{ car.car_id }}</td>
+                    <td style="padding: 5px;">{{ car.name }}</td>
+                    <td style="padding: 5px;">{{ car.model }}</td>
+                    <td style="padding: 5px;">{{ car.year }}</td>
+                    <td style="padding: 5px;">{{ car.vin }}</td>
+                    <td style="padding: 5px;">{{ car.owner }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% endif %}
+
+        <script>
+            $(document).ready(function () {
+                $('table').DataTable({
+                    "paging": true,
+                    "searching": true,
+                    "ordering": true,
+                    "lengthChange": true,
+                    "pageLength": 10,
+                    "responsive": true
+                });
+            });
+        </script>
 
     </div>
 

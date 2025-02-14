@@ -1,6 +1,6 @@
 import logging
 from app.utils.constants import ERROR_NO_USERS_FOUND, ERROR_NO_CARS_FOUND, ERROR_NO_SERVICES_FOUND
-from app.database.admin_database_handler import AdminDatabaseHandler
+from app.database.user_database_handler import UserDatabaseHandler
 
 
 logging.basicConfig(
@@ -12,4 +12,18 @@ logging.basicConfig(
 
 class UserActions:
     def __init__(self):
-        self.admin_db_handler = AdminDatabaseHandler()
+        self.user_db_handler = UserDatabaseHandler()
+    
+    def get_cars_by_user_id(self, user_id):
+        try:
+            with self.user_db_handler as db:
+                cars = db.get_cars_by_user_id(user_id)
+
+            if not cars:
+                print(ERROR_NO_CARS_FOUND)
+                return []
+
+            return cars
+        except Exception as e:
+            logging.error(f"Error in get_cars_by_user_id: {str(e)}")
+            return None
