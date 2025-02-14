@@ -270,6 +270,48 @@ def init_app(app):
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
 
+    @app.route("/admin/services/add", methods=["GET", "POST"])
+    def add_service():
+        if not helpers.check_admin_session():
+            return redirect(url_for("index"))
+        
+        cars = admin_actions.get_all_cars()
+        if not cars:
+                flash(ERROR_NO_CARS_FOUND, "warning")
+                return redirect(url_for("list_services"))
+        
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "car_id": request.form.get("car_id"),
+                    "mileage": request.form.get("mileage"),
+                    "service_type": request.form.get("service_type"),
+                    "service_date": request.form.get("service_date"),
+                    "next_service_date": request.form.get("next_service_date"),
+                    "cost": request.form.get("cost"),
+                    "notes": request.form.get("notes")
+                }
+
+                form_data["car_id"] = int(form_data["car_id"])
+                form_data["mileage"] = int(form_data["mileage"]) if form_data["mileage"] else None
+                form_data["cost"] = float(form_data["cost"]) if form_data["cost"] else None
+
+                if not form_data["next_service_date"]:
+                    form_data["next_service_date"] = None 
+
+                if not admin_actions.add_service(**form_data):
+                    flash("Failed to add service.", "danger")
+                    return render_template("add_service.html", role="admin", cars=cars, form_data=form_data)
+                
+                return redirect(url_for("list_services"))
+                
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("add_service.html", role="admin", cars=cars)
+
     @app.route("/admin/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
     def delete_entity(entity, item_id):
         if not helpers.check_admin_session():

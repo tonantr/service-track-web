@@ -19,7 +19,7 @@
         <h1>Manage Services</h1>
         <hr>
         <div style="margin-bottom: 15px;">
-            <a href="#" class="add-button">+ Add Service</a>
+            <a href="{{ url_for('add_service') }}" class="add-button">+ Add Service</a>
         </div>
         {% if services %}
         <table style="width: 100%; border-collapse: collapse;">

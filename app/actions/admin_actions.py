@@ -104,6 +104,14 @@ class AdminActions:
             logging.error(f"Error in get_all_services: {str(e)}")
             return None
 
+    def add_service(self, **kwargs):
+        try:
+            with self.admin_db_handler as db:
+                return db.add_service(**kwargs)
+        except Exception as e:
+            logging.error(f"Error in add_service: {str(e)}")
+            return False
+
     def get_total_users(self):
         try:
             with self.admin_db_handler as db:

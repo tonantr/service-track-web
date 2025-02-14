@@ -1,5 +1,5 @@
 from app.database.database_handler import DatabaseHandler
-from app.utils.constants import ERROR_NO_FIELDS_TO_ADD
+from app.utils.constants import ERROR_NO_FIELDS
 import logging
 
 
@@ -23,7 +23,7 @@ class AdminDatabaseHandler(DatabaseHandler):
 
     def update_user(self, user_id, **kwargs):
         if not kwargs:
-            raise ValueError(ERROR_NO_FIELDS_TO_ADD)
+            raise ValueError(ERROR_NO_FIELDS)
         
         if "role" not in kwargs:
             kwargs["role"] = "user"
@@ -75,7 +75,7 @@ class AdminDatabaseHandler(DatabaseHandler):
 
     def add_car(self, **kwargs):
         if not kwargs:
-            raise ValueError(ERROR_NO_FIELDS_TO_ADD)
+            raise ValueError(ERROR_NO_FIELDS)
         
         fields = []
         values = []
@@ -90,7 +90,7 @@ class AdminDatabaseHandler(DatabaseHandler):
     
     def update_car(self, car_id, **kwargs):
         if not kwargs:
-            raise ValueError(ERROR_NO_FIELDS_TO_ADD)
+            raise ValueError(ERROR_NO_FIELDS)
         
         fields = []
         values = []
@@ -130,6 +130,16 @@ class AdminDatabaseHandler(DatabaseHandler):
             ORDER BY s.service_date ASC, s.next_service_date ASC;
         """
         return self.fetch_all(query)
+    
+    def add_service(self, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS)
+        
+        fields = list(kwargs.keys())
+        values = list(kwargs.values())
+
+        query = f"INSERT INTO services ({','.join(fields)}) VALUES ({', '.join(['%s'] * len(values))})"
+        return self.execute_commit(query, tuple(values))
 
     def get_total_users(self):
         query = "SELECT COUNT(*) FROM users"
