@@ -21,7 +21,10 @@
 
         <form method="POST">
             {% if role == "admin" %}
-            <div class="user-section" style="margin-bottom: 20px;">
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="user_id">Select Owner</label>
+                </div>
                 <select name="user_id" required>
                     <option value="" disabled selected>--------select--------</option>
                     {% for user in users %}
@@ -31,21 +34,44 @@
             </div>
             {% endif %}
 
-            <input type="text" name="name" placeholder="Name" required value="{{ form_data.name if form_data else '' }}">
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="name">Name</label>
+                </div>
+                <input type="text" name="name" placeholder="Name" required
+                    value="{{ form_data.name if form_data else '' }}">
+            </div>
 
-            <input type="text" name="model" placeholder="Model" required value="{{ form_data.model if form_data else '' }}">
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="model">Model</label>
+                </div>
+                <input type="text" name="model" placeholder="Model" required
+                    value="{{ form_data.model if form_data else '' }}">
+            </div>
 
-            <input type="text" name="year" placeholder="Year" required pattern="\d{4}" title="Enter car year (YYYY)"
-                value="{{ form_data.year if form_data else '' }}">
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="year">Year</label>
+                </div>
+                <input type="text" name="year" placeholder="Year" required pattern="\d{4}" title="Enter car year (YYYY)"
+                    value="{{ form_data.year if form_data else '' }}">
+            </div>
 
-            <input type="text" name="vin" placeholder="VIN" required pattern="^[A-HJ-NPR-Z0-9]{17}$"
-                title="Enter a valid 17-character VIN" value="{{ form_data.vin if form_data else '' }}">
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="vin">VIN</label>
+                </div>
+                <input type="text" name="vin" placeholder="VIN" required pattern="^[A-HJ-NPR-Z0-9]{17}$"
+                    title="Enter a valid 17-character VIN" value="{{ form_data.vin if form_data else '' }}">
+            </div>
 
             <button type="submit">Add</button>
 
         </form>
 
-        <a href="{{ url_for('list_cars') }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">Go back to the list</a>
+        <a href="{{ url_for('list_cars') }}" class="btn btn-secondary"
+            style="display: inline-block; margin-top: 20px;">Go back to the list</a>
 
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=True) %}
