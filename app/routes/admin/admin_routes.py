@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, request, session
+from flask import render_template, redirect, flash, url_for, request, session, send_file
 from app.utils.constants import (
     ERROR_NO_USERS_FOUND,
     ERROR_USER_NOT_FOUND,
@@ -14,6 +14,8 @@ from app.utils.helpers import Helpers
 from app.utils.validators import validate_email, validate_password, validate_username
 from app.auth.password_hashing import hash_password
 import logging
+import os
+import csv
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -399,3 +401,47 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
 
         return render_template("confirmation.html", entity=entity, item=item, entity_name=entity_name)
+    
+    @app.route("/admin/export/csv", methods=["GET", "POST"])
+    def export_csv(export_type="users"):
+        if request.method == "POST":
+            export_type = request.form.get("export_type")
+
+        downloads_folder = helpers.get_downloads_folder()
+        file_name = f"{export_type}_adm.csv"
+        file_path = os.path.join(downloads_folder, file_name)
+
+        if request.method == "POST":
+            try:
+                data, headers = [], []
+                if export_type == "users":
+                    data = admin_actions.get_all_users()
+                    headers = ["ID", "Username", "Role", "Email"]
+                elif export_type == "cars":
+                    data = admin_actions.get_all_cars()
+                    headers = ["ID", "Name", "Model", "Year", "Owner", "Service"]
+                elif export_type == "services":
+                    data = admin_actions.get_all_services()
+                    headers = ["ID", "Car Name", "Service Type", "Service Date", "Next Service Date", "Notes"]
+
+                if not data:
+                    flash("No data found", "warning")
+                    return redirect(url_for("export_csv", export_type=export_type))
+
+                with open(file_path, "w", newline="", encoding="utf-8") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(headers)
+                    for row in data:
+                        writer.writerow(row.values())
+
+                return send_file(file_path, as_attachment=True)
+                
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("export_csv.html", export_type=export_type)
+                
+        
+        
