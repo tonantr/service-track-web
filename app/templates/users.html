@@ -1,66 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSM</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-
-<body>
-
-    <div class="navbar">
-        <a href="/admin/dashboard">Dashboard</a>
-        <a href="/logout" class="logout">Logout</a>
+{% block content %}
+    <h1>Manage Users</h1>
+    <hr>
+    <div style="margin-bottom: 15px;">
+        <a href="{{ url_for('add_user') }}" class="add-button">+ Add User</a>
     </div>
-
-    <div class="container">
-        <h1>Manage Users</h1>
-        <hr>
-        <div style="margin-bottom: 15px;">
-            <a href="{{ url_for('add_user') }}" class="add-button">+ Add User</a>
-        </div>
-        {% if users %}
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="padding: 5px; text-align: left;">ID</th>
-                    <th style="padding: 5px; text-align: left;">Name</th>
-                    <th style="padding: 5px; text-align: left;">Role</th>
-                    <th style="padding: 5px; text-align: left;">Email</th>
-                    <th style="padding: 5px; text-align: left;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td style="padding: 5px;">{{ user.user_id }}</td>
-                    <td style="padding: 5px;">{{ user.username }}</td>
-                    <td style="padding: 5px;">{{ user.role }}</td>
-                    <td style="padding: 5px;">{{ user.email }}</td>
-                    <td style="padding: 5px;">
-                        <a href="{{ url_for('update_user', user_id=user.user_id) }}">Update</a> |
-                        <a href="{{ url_for('delete_entity', entity='users', item_id=user.user_id) }}">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <!-- Flash Messages -->
-        {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-        <ul class="flash-messages">
-            {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
+    {% if users %}
+    <table id="usersTable" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="padding: 5px; text-align: left;">ID</th>
+                <th style="padding: 5px; text-align: left;">Name</th>
+                <th style="padding: 5px; text-align: left;">Role</th>
+                <th style="padding: 5px; text-align: left;">Email</th>
+                <th style="padding: 5px; text-align: left;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td style="padding: 5px;">{{ user.user_id }}</td>
+                <td style="padding: 5px;">{{ user.username }}</td>
+                <td style="padding: 5px;">{{ user.role }}</td>
+                <td style="padding: 5px;">{{ user.email }}</td>
+                <td style="padding: 5px;">
+                    <a href="{{ url_for('update_user', user_id=user.user_id) }}">Update</a> |
+                    <a href="{{ url_for('delete_entity', entity='users', item_id=user.user_id) }}">Delete</a>
+                </td>
+            </tr>
             {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% endif %}
-    </div>
-
-</body>
-
-</html>
+        </tbody>
+    </table>
+    {% else %}
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% endif %}
+{% endblock %}

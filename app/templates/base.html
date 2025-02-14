@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <!-- Page-specific content will be inserted here -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Apply DataTables to all tables
+            $('table').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "lengthChange": true,
+                "pageLength": 10
+            });
+        });
+    </script>
+
+</body>
+
+</html>
