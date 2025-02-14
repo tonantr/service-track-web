@@ -204,7 +204,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("add_car.html", role="admin", users=users)
+        return render_template("admin/add_car.html", role="admin", users=users)
 
     @app.route("/admin/cars/update/<int:car_id>", methods=["GET", "POST"])
     def update_car(car_id):
@@ -313,7 +313,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("add_service.html", role="admin", cars=cars)
+        return render_template("admin/add_service.html", role="admin", cars=cars)
 
     @app.route("/admin/services/update/<int:service_id>", methods=["GET", "POST"])
     def update_service(service_id):
