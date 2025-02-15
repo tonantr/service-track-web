@@ -10,7 +10,14 @@
 </head>
 
 <body>
-
+    <div class="navbar">
+        {% if session['role'] == 'admin' %}
+            <a href="/admin/dashboard">Dashboard</a>
+        {% elif session['role'] == 'user' %}
+            <a href="/user/dashboard">Dashboard</a>
+        {% endif %}
+        <a href="/logout" class="logout">Logout</a>
+    </div>
     <div class="container">
         <h3>Are you sure you want to delete this {{ entity_name }}?</h3>
 

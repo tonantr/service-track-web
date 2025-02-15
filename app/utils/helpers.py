@@ -115,7 +115,8 @@ class Helpers:
             logging.error(f"Error in check_vin_exists: {e}")
             raise Exception(f"An error occurred while checking the vin: {str(e)}")
     
-    def get_downloads_folder(self):
+    @staticmethod
+    def get_downloads_folder():
         if os.name == "nt":  # Windows
             return os.path.join(os.environ["USERPROFILE"], "Downloads")
         else:  # macOS/Linux
