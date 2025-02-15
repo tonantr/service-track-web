@@ -14,7 +14,6 @@ logging.basicConfig(
 class Login:
     def __init__(self, helpers: Helpers):
         self.helpers = helpers
-        self.logged_in_user = None
         self.role = None
 
     def authenticate(self, username, password):
@@ -29,9 +28,8 @@ class Login:
                     stored_password = hashed_password
 
                 if verify_password(password, stored_password):
-                    self.logged_in_user = username
+                    session["username"] = username
                     self.role = user["role"]
-                    self.user_id = user["user_id"]
                     session["user_id"] = user["user_id"]
                     return True
                 else:

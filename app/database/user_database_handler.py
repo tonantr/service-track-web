@@ -13,7 +13,7 @@ class UserDatabaseHandler(DatabaseHandler):
     def __init__(self):
         super().__init__()
     
-    def get_cars_by_user_id(self, userid):
+    def get_cars_by_user(self, userid):
         query = """
         SELECT car_id, user_id, name, model, year, vin 
         FROM cars 
@@ -35,3 +35,21 @@ class UserDatabaseHandler(DatabaseHandler):
         values.append(user_id)
 
         return self.execute_commit(query, tuple(values))
+    
+    def get_services_by_car(self,car_id):
+        query = """
+            SELECT 
+                s.service_id, 
+                c.name AS car_name,
+                s.mileage,
+                s.service_type, 
+                s.service_date,
+                s.next_service_date,
+                s.cost,
+                s.notes
+            FROM services s
+            LEFT JOIN cars c ON s.car_id = c.car_id
+            WHERE s.car_id = %s
+            ORDER BY s.service_date ASC, s.next_service_date ASC;
+        """
+        return self.fetch_all(query, (car_id,))

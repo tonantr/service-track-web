@@ -35,7 +35,7 @@ def init_app(app):
                 flash(ERROR_USER_NOT_FOUND, "danger")
                 return redirect(url_for("index"))
 
-            cars = user_actions.get_cars_by_user_id(user["user_id"])
+            cars = user_actions.get_cars_by_user(user["user_id"])
             if cars is None:
                 cars = []
 
@@ -62,10 +62,7 @@ def init_app(app):
                 flash(ERROR_USER_NOT_FOUND, "danger")
                 return redirect(url_for("index"))
 
-            cars = user_actions.get_cars_by_user_id(user["user_id"])
-            if cars is None:
-                cars = []
-
+            cars = user_actions.get_cars_by_user(user["user_id"]) or []
             return render_template("user/user_cars.html", cars=cars)
         except Exception as e:
             logging.error(f"Error occurred: {str(e)}") 
@@ -131,3 +128,35 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
         
         return render_template("user/update_profile.html", user=user)
+    
+    @app.route("/user/services", methods=["GET", "POST"])
+    def service_history():
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        try:
+            cars = user_actions.get_cars_by_user(session["user_id"]) or []
+
+            services = []
+            car_id = None
+
+            if request.method == "POST":
+
+                car_id = request.form.get("car_id")
+
+                if car_id:
+                    services = user_actions.get_services_by_car(car_id)
+                   
+                    for service in services:
+                        service["mileage"] = service["mileage"] or "N/A"
+                        service["service_type"] = service["service_type"] or "N/A"
+                        service["service_date"] = service["service_date"] or "N/A"
+                        service["next_service_date"] = service["next_service_date"] or "N/A"
+                        service["cost"] = service["cost"] if service["cost"] is not None else "N/A"
+                        service["notes"] = service["notes"] or "N/A"
+
+            return render_template("user/user_services.html", cars=cars, services=services)
+        except Exception as e:
+            logging.error(f"Error occurred: {str(e)}") 
+            error_message = f"An error occurred: {str(e)}"
+            return render_template("error.html", error_message=error_message)

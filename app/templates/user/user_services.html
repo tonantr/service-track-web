@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Service History</h1>
+    <hr>
+    {% if cars %}
+    <form method="POST" action="{{ url_for('service_history') }}">
+        <div class="form-group">
+            <label for="car_id">Select Car</label>
+            <select id="car_id" name="car_id" required>
+                <option value="" disabled selected>--------select--------</option>
+                {% for car in cars %}
+                    <option value="{{ car.car_id }}" {% if car.car_id == request.form.get('car_id') %} selected {% endif %}>
+                        {{ car.car_id }} | {{ car.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">View Services</button>
+    </form>
+    {% endif %}
+
+    <div style="margin-bottom: 15px; margin-top: 15px;">
+        <a href="#" class="add-button">+ Add Service</a>
+    </div>
+
+    {% if services %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Car Name</th>
+                <th>Mileage</th>
+                <th>Service Type</th>
+                <th>Service Date</th>
+                <th>Next Service Date</th>
+                <th>Cost</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+            <tr>
+                <td>{{ service['service_id'] }}</td>
+                <td>{{ service['car_name'] }}</td>
+                <td>{{ service['mileage'] }}</td>
+                <td>{{ service['service_type'] | default('') | truncate(30, True) }}</td>
+                <td>{{ service['service_date'] }}</td>
+                <td>{{ service['next_service_date'] }}</td>
+                <td>{{ service['cost'] }}</td>
+                <td>{{ service['notes'] | default('') | truncate(30, True) }}</td>
+                <td>
+                    <a href="#">Update</a> |
+                    <a href="#">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">Go back</a>
+
+    {% else %}
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% endif %}
+{% endblock %}

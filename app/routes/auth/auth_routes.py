@@ -10,7 +10,6 @@ def init_app(app, login):
             password = request.form["password"]
 
             if login.authenticate(username, password):
-                session["username"] = username
                 session["role"] = login.role
                 return redirect(
                     url_for(

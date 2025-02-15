@@ -14,10 +14,10 @@ class UserActions:
     def __init__(self):
         self.user_db_handler = UserDatabaseHandler()
     
-    def get_cars_by_user_id(self, user_id):
+    def get_cars_by_user(self, user_id):
         try:
             with self.user_db_handler as db:
-                cars = db.get_cars_by_user_id(user_id)
+                cars = db.get_cars_by_user(user_id)
 
             if not cars:
                 print(ERROR_NO_CARS_FOUND)
@@ -35,3 +35,17 @@ class UserActions:
         except Exception as e:
             logging.error(f"Error in update_user: {str(e)}")
             return False
+
+    def get_services_by_car(self, car_id):
+        try:
+            with self.user_db_handler as db:
+                services = db.get_services_by_car(car_id)
+
+            if not services:
+                print(ERROR_NO_SERVICES_FOUND)
+                return []
+
+            return services
+        except Exception as e:
+            logging.error(f"Error in get_services_by_car: {str(e)}")
+            return None
