@@ -44,9 +44,9 @@ class UserDatabaseHandler(DatabaseHandler):
                 s.mileage,
                 s.service_type, 
                 s.service_date,
-                s.next_service_date,
+                IFNULL(s.next_service_date, 'N/A') AS next_service_date,
                 s.cost,
-                s.notes
+                IFNULL(s.notes, 'N/A') AS notes
             FROM services s
             LEFT JOIN cars c ON s.car_id = c.car_id
             WHERE s.car_id = %s
