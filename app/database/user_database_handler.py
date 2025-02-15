@@ -20,3 +20,18 @@ class UserDatabaseHandler(DatabaseHandler):
         WHERE user_id = %s
         """
         return self.fetch_all(query, (userid,))
+    
+    def update_user(self, user_id, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS)
+
+        if not kwargs.get("password"):
+            kwargs.pop("password", None)
+        
+        fields = [f"{key}=%s" for key in kwargs.keys()]
+        values = list(kwargs.values())
+
+        query = f"UPDATE users SET {','.join(fields)} WHERE user_id=%s"
+        values.append(user_id)
+
+        return self.execute_commit(query, tuple(values))

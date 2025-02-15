@@ -1,5 +1,6 @@
 import getpass
 import logging
+from flask import session
 from app.auth.password_hashing import verify_password, is_password_plaintext, hash_password
 from app.utils.helpers import Helpers
 
@@ -30,6 +31,8 @@ class Login:
                 if verify_password(password, stored_password):
                     self.logged_in_user = username
                     self.role = user["role"]
+                    self.user_id = user["user_id"]
+                    session["user_id"] = user["user_id"]
                     return True
                 else:
                     return False

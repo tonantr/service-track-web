@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, session
+from flask import render_template, redirect, flash, url_for, session, request
 from app.utils.constants import (
     ERROR_NO_USERS_FOUND,
     ERROR_USER_NOT_FOUND,
@@ -88,3 +88,46 @@ def init_app(app):
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
+    
+    @app.route("/user/profile/update", methods=["GET", "POST"])
+    def update_profile():
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        user_id = session.get("user_id")
+        user = helpers.get_user_by_id(user_id)
+        if not user:
+            flash(ERROR_USER_NOT_FOUND, "warning")
+            return redirect(url_for("get_profile"))
+        
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "username": request.form.get("username"),
+                    "email": request.form.get("email"),
+                    "password": request.form.get("password")
+                }
+
+                if request.form.get("username") != user["username"] and helpers.check_username_exists(form_data["username"]):
+                        flash("Username already exists.", "warning")
+                        return render_template("user/update_profile.html", user=user)
+                
+                if request.form.get("email") != user["email"] and helpers.check_email_exists(form_data["email"]):
+                        flash("Email already exists.", "warning")
+                        return render_template("user/update_profile.html", user=user)
+                
+                if form_data["password"]:
+                    form_data["password"] = hash_password(form_data["password"])
+                
+                if not user_actions.update_user(user_id, **form_data):
+                    flash("Failed to update profile.", "danger")
+                    return render_template("user/update_profile.html", user=user)
+                
+                return redirect(url_for("get_profile")) 
+            
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("user/update_profile.html", user=user)

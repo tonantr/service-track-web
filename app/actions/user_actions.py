@@ -27,3 +27,11 @@ class UserActions:
         except Exception as e:
             logging.error(f"Error in get_cars_by_user_id: {str(e)}")
             return None
+    
+    def update_user(self, user_id, **kwargs):
+        try:
+            with self.user_db_handler as db:
+                return db.update_user(user_id, **kwargs)
+        except Exception as e:
+            logging.error(f"Error in update_user: {str(e)}")
+            return False

@@ -82,26 +82,30 @@ def init_app(app):
 
                 if not validate_username(username):
                     flash("Username must be at least 3 characters.", "danger")
-                    return render_template("add_user.html")
+                    return render_template("admin/add_user.html")
                 
                 if not validate_email(email):
                     flash("Invalid email format.", "danger")
-                    return render_template("add_user.html")
+                    return render_template("admin/add_user.html")
                 
                 if not validate_password(password):
                     flash("Password must be at least 6 characters.", "danger")
-                    return render_template("add_user.html")
-
-                if helpers.check_if_username_or_email_exists(username, email):
-                    flash("Username or Email already exists.", "warning")
-                    return render_template("add_user.html")
+                    return render_template("admin/add_user.html")
+                
+                if helpers.check_username_exists(username):
+                        flash("Username already exists.", "warning")
+                        return render_template("admin/add_user.html")
+                
+                if helpers.check_email_exists(email):
+                        flash("Email already exists.", "warning")
+                        return render_template("admin/add_user.html")
                 
                 if password:
                     hashed_password = hash_password(password)
 
                 if not admin_actions.add_user(username, email, hashed_password, role):
                     flash("Failed to add user.", "danger")
-                    return render_template("add_user.html")
+                    return render_template("admin/add_user.html")
                 
                 return redirect(url_for("list_users")) 
             except Exception as e:
@@ -130,9 +134,13 @@ def init_app(app):
                     "password": request.form.get("password")
                 }
 
-                if helpers.check_if_username_or_email_exists(updated_data["username"], updated_data["email"], exclude_user_id=user["user_id"]):
-                    flash("Username or Email already exists.", "warning")
-                    return render_template("update_user.html", user=user)
+                if request.form.get("username") != user["username"] and helpers.check_username_exists(updated_data["username"]):
+                        flash("Username already exists.", "warning")
+                        return render_template("admin/update_user.html", user=user)
+                
+                if request.form.get("email") != user["email"] and helpers.check_email_exists(updated_data["email"]):
+                        flash("Email already exists.", "warning")
+                        return render_template("admin/update_user.html", user=user)
                 
                 if updated_data["password"]:
                     updated_data["password"] = hash_password(updated_data["password"])
@@ -140,7 +148,7 @@ def init_app(app):
 
                 if not admin_actions.update_user(user_id, **updated_data):
                     flash("Failed to update user.", "danger")
-                    return render_template("update_user.html")
+                    return render_template("admin/update_user.html")
                 
                 return redirect(url_for("list_users")) 
             

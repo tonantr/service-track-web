@@ -65,26 +65,35 @@ class Helpers:
             flash(ERROR_PLEASE_LOG_IN, "error")
             return False
         return True
-
-    def check_if_username_or_email_exists(self, username, email, exclude_user_id=None):
+    
+    def check_username_exists(self, username):
         try:
-            query = "SELECT COUNT(*) FROM users WHERE username = %s OR email = %s"
-
-            if exclude_user_id:
-                query += " AND user_id != %s"
-                with self.db_handler as db:
-                    result = db.fetch_one(query, (username, email, exclude_user_id))
-            else:
-                with self.db_handler as db:
-                    result = db.fetch_one(query, (username, email))
+            query = "SELECT COUNT(*) FROM users WHERE username = %s"
+            with self.db_handler as db:
+                result = db.fetch_one(query, (username,))
 
             if result["COUNT(*)"] > 0:
                 return True
+            
             return False
         except Exception as e:
-            logging.error(f"Error in check_if_username_or_email_exists: {e}")
-            raise Exception(f"An error occurred while checking username/email existence: {str(e)}")
+            logging.error(f"Error in check_username_exists: {e}")
+            raise Exception(f"An error occurred while checking username existence: {str(e)}")
     
+    def check_email_exists(self, email):
+        try:
+            query = "SELECT COUNT(*) FROM users WHERE email = %s"
+            with self.db_handler as db:
+                result = db.fetch_one(query, (email,))
+
+            if result["COUNT(*)"] > 0:
+                return True
+            
+            return False
+        except Exception as e:
+            logging.error(f"Error in check_email_exists: {e}")
+            raise Exception(f"An error occurred while checking email existence: {str(e)}")
+
     def check_vin_exists(self, vin):
         try:
             query = "SELECT COUNT(*) FROM cars WHERE vin = %s"
