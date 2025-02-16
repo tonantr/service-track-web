@@ -49,3 +49,17 @@ class UserActions:
         except Exception as e:
             logging.error(f"Error in get_services_by_car: {str(e)}")
             return None
+    
+    def update_car(self, car_id, **kwargs):
+        try:
+            with self.user_db_handler as db:
+                cars = db.update_car(car_id, **kwargs)
+            
+            if not cars:
+                print(ERROR_NO_CARS_FOUND)
+                return []
+            
+            return cars
+        except Exception as e:
+            logging.error(f"Error in update_car: {str(e)}")
+            return None

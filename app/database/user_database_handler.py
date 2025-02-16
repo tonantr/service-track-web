@@ -19,6 +19,8 @@ class UserDatabaseHandler(DatabaseHandler):
         FROM cars 
         WHERE user_id = %s
         """
+        logging.info(f"Executing query: {query}")
+
         return self.fetch_all(query, (userid,))
     
     def update_user(self, user_id, **kwargs):
@@ -33,6 +35,8 @@ class UserDatabaseHandler(DatabaseHandler):
 
         query = f"UPDATE users SET {','.join(fields)} WHERE user_id=%s"
         values.append(user_id)
+
+        logging.info(f"Executing query: {query} with values: {values}")
 
         return self.execute_commit(query, tuple(values))
     
@@ -52,4 +56,20 @@ class UserDatabaseHandler(DatabaseHandler):
             WHERE s.car_id = %s
             ORDER BY s.service_date ASC, s.next_service_date ASC;
         """
+        logging.info(f"Executing query: {query}")
+
         return self.fetch_all(query, (car_id,))
+    
+    def update_car(self, car_id, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS)
+        
+        fields = [f"{key}=%s" for key in kwargs.keys()]
+        values = list(kwargs.values())
+
+        query = f"UPDATE cars SET {', '.join(fields)} WHERE car_id=%s"
+        values.append(car_id)
+
+        logging.info(f"Executing query: {query} with values: {values}")
+        
+        return self.execute_commit(query, tuple(values))

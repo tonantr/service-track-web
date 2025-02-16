@@ -160,3 +160,40 @@ def init_app(app):
             logging.error(f"Error occurred: {str(e)}") 
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
+    
+    @app.route("/user/cars/update/<int:car_id>", methods=["GET", "POST"])
+    def edit_car(car_id):
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        car = helpers.get_car_by_id(car_id)
+        if not car:
+            flash(ERROR_CAR_NOT_FOUND, "danger")
+            return redirect(url_for("get_cars"))
+        
+        if car["user_id"] != session["user_id"]:
+            return redirect(url_for("get_cars"))
+
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "user_id": session["user_id"],
+                    "name": request.form.get("name"),
+                    "model": request.form.get("model"),
+                    "year": request.form.get("year"),
+                    "vin": request.form.get("vin")
+                }
+
+                if not user_actions.update_car(car_id, **form_data):
+                    flash("Failed to update car.", "danger")
+                    return render_template("user/edit_car.html", car=car)
+                
+                return redirect(url_for("get_cars"))
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("user/edit_car.html", car=car)
+        
+        

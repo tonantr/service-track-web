@@ -27,7 +27,7 @@
                 <td style="padding: 5px;">{{ car.year }}</td>
                 <td style="padding: 5px;">{{ car.vin }}</td>
                 <td style="padding: 5px;">
-                    <a href="#">Update</a> |
+                    <a href="{{ url_for('edit_car', car_id = car.car_id) }}">Update</a> |
                     <a href="#">Delete</a>
                 </td>
             </tr>
