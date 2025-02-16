@@ -378,9 +378,6 @@ def init_app(app):
         elif entity == "services":
             item = helpers.get_service_by_id(item_id)
             entity_name = "Service"
-        else:
-            flash(f"Invalid entity type: {entity}", "danger")
-            return redirect(url_for("list_entities", entity=entity))
 
         if not item:
             flash(f"{entity_name} not found.", "warning")
@@ -408,7 +405,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
 
-        return render_template("confirmation.html", entity=entity, item=item, entity_name=entity_name)
+        return render_template("admin/confirmation.html", entity=entity, item=item, entity_name=entity_name)
     
     @app.route("/admin/export/csv", methods=["GET", "POST"])
     def export_csv(export_type="users"):

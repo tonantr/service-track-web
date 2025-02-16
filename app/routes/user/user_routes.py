@@ -195,5 +195,41 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
         
         return render_template("user/edit_car.html", car=car)
+    
+    @app.route("/user/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
+    def remove_entity(entity, item_id):
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        if entity == "cars":
+            item = helpers.get_car_by_id(item_id)
+            entity_name = "Car"
+        elif entity == "services":
+            item = helpers.get_service_by_id(item_id)
+            entity_name = "Service"
+                
+        if not item:
+            flash(f"{entity_name} not found.", "warning")
+            return redirect(url_for("get_cars")) if entity=="cars" else redirect(url_for("service_history"))
+        
+        if request.method == "POST":
+            try:
+                if entity == "cars":
+                    if not user_actions.delete_car(item_id):
+                        flash("Failed to delete car.", "danger")
+                        return redirect(url_for("get_cars"))
+                elif entity == "services":
+                    pass
+
+                return redirect(url_for("get_cars")) if entity=="cars" else redirect(url_for("service_history"))
+            
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("user/remove_entity.html", entity=entity, item=item, entity_name=entity_name)
+
+
         
         

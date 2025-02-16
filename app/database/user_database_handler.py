@@ -73,3 +73,14 @@ class UserDatabaseHandler(DatabaseHandler):
         logging.info(f"Executing query: {query} with values: {values}")
         
         return self.execute_commit(query, tuple(values))
+    
+    def delete_car(self, car_id):
+        query_services = "DELETE FROM services WHERE car_id = %s"
+        if not self.execute_commit(query_services, (car_id,)):
+            return False
+        
+        query_cars = "DELETE FROM cars WHERE car_id = %s"
+        if not self.execute_commit(query_cars, (car_id,)):
+            return False
+        
+        return True

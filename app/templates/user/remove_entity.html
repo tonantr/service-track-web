@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/user/dashboard">Dashboard</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+    <div class="container">
+        <h3>Are you sure you want to delete this {{ entity_name }}?</h3>
+
+        <ul>
+            {% if entity_name == "Car" %}
+                <li><strong>ID:</strong> {{ item.car_id }}</li> 
+                <li><strong>Name:</strong> {{ item.name }}</li>
+                <li><strong>Model:</strong> {{ item.model }}</li>
+                <li><strong>Year:</strong> {{ item.year }}</li>
+            {% elif entity_name == "Service" %}
+                <li><strong>ID:</strong> {{ item.service_id }}</li> 
+                <li><strong>Mileage:</strong> {{ item.mileage or 'N/A' }}</li>
+                <li><strong>Service Type:</strong> 
+                    {{ item.service_type[:30] ~ '...' if item.service_type and item.service_type|length > 30 else item.service_type or 'N/A' }}
+                </li>
+                <li><strong>Service Date:</strong> {{ item.service_date or 'N/A' }}</li>
+                <li><strong>Next Service Date:</strong> {{ item.next_service_date or 'N/A' }}</li>
+                <li><strong>Cost:</strong> {{ item.cost or 'N/A' }}</li>
+                <li><strong>Notes:</strong> 
+                    {{ item.notes[:50] ~ '...' if item.notes and item.notes|length > 50 else item.notes or 'N/A' }}
+                </li>
+            {% endif %}
+        </ul>
+
+        <div class="form-actions">
+            <form method="POST">
+                <button type="submit">Delete</button>
+            </form>
+            <a href="{{ url_for('get_cars' if entity=='cars' else 'service_history') }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;"><<< Back</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
