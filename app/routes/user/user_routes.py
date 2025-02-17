@@ -291,7 +291,9 @@ def init_app(app):
                         flash("Failed to delete car.", "danger")
                         return redirect(url_for("get_cars"))
                 elif entity == "services":
-                    pass
+                    if not user_actions.delete_service(item_id):
+                        flash("Failed to delete service.", "danger")
+                        return redirect(url_for("service_history"))
 
                 return redirect(url_for("get_cars")) if entity=="cars" else redirect(url_for("service_history"))
             

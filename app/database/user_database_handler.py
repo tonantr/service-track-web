@@ -73,6 +73,13 @@ class UserDatabaseHandler(DatabaseHandler):
 
         return self.execute_commit(query, tuple(values))
 
+    def delete_service(self, service_id):
+        query = "DELETE FROM services WHERE service_id = %s"
+
+        logging.info(f"Executing query: {query}")
+
+        return self.execute_commit(query, (service_id,))
+
     def update_car(self, car_id, **kwargs):
         if not kwargs:
             raise ValueError(ERROR_NO_FIELDS)

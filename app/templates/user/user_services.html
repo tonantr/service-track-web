@@ -52,7 +52,7 @@
                 <td>{{ service['notes'] | default('') | truncate(30, True) }}</td>
                 <td>
                     <a href="#">Update</a> |
-                    <a href="#">Delete</a>
+                    <a href="{{ url_for('remove_entity', entity='services', item_id=service.service_id) }}">Delete</a>
                 </td>
             </tr>
             {% endfor %}
