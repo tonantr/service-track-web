@@ -9,16 +9,17 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
 
     <div class="navbar">
         {% if session['role'] == 'admin' %}
-            <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/dashboard">Dashboard</a>
         {% elif session['role'] == 'user' %}
-            <a href="/user/dashboard">Dashboard</a>
+        <a href="/user/dashboard">Dashboard</a>
         {% endif %}
         <a href="/logout" class="logout">Logout</a>
     </div>
@@ -27,18 +28,7 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('table').DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "lengthChange": true,
-                "pageLength": 10,
-                "responsive": true
-            });
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/tables.js') }}"></script>
 
 </body>
 

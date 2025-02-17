@@ -33,21 +33,24 @@
             <div class="form-group">
                 <label>Select Type:</label>
                 <div>
-                    <input type="radio" id="cars" name="export_type" value="cars" {% if export_type == "cars" %} checked {% endif %} onchange="toggleCarSelection()"> 
+                    <input type="radio" id="cars" name="export_type" value="cars" {% if export_type=="cars" %} checked
+                        {% endif %} onchange="toggleCarSelection()">
                     <label for="cars">Cars</label>
                 </div>
                 <div>
-                    <input type="radio" id="services" name="export_type" value="services" {% if export_type == "services" %} checked {% endif %} onchange="toggleCarSelection()"> 
+                    <input type="radio" id="services" name="export_type" value="services" {% if export_type=="services"
+                        %} checked {% endif %} onchange="toggleCarSelection()">
                     <label for="services">Services</label>
                 </div>
             </div>
-            
+
             <div class="form-group" id="car_selection" style="display: none;">
                 <div><label for="car_id">Select Car:</label></div>
                 <select id="car_id" name="car_id">
                     <option value="" disabled selected>--------select--------</option>
                     {% for car in cars %}
-                    <option value="{{ car.car_id }}">{{ car.name }} - {{ car.model }} ({{ car.year }})</option>
+                    <option value="{{ car.car_id }}" {% if car.car_id==car_id %} selected {% endif %}>{{ car.name }} -
+                        {{ car.model }} ({{ car.year }})</option>
                     {% endfor %}
                 </select>
             </div>
@@ -55,25 +58,11 @@
             <button type="submit">Export</button>
         </form>
 
-        <script>
-            function toggleCarSelection() {
-                var exportType = document.querySelector('input[name="export_type"]:checked').value;
-                var carSelection = document.getElementById("car_selection");
-        
-                if (exportType === "services") {
-                    carSelection.style.display = "block";
-                } else {
-                    carSelection.style.display = "none";
-                }
-            }
-        
-            window.onload = function () {
-                toggleCarSelection();
-            };
-        </script>
+        <script src="{{ url_for('static', filename='js/export.js')}}"></script>
 
         <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary"
-            style="display: inline-block; margin-top: 20px;"><<< Back</a>
+            style="display: inline-block; margin-top: 20px;">
+            <<< Back</a>
 
     </div>
 
