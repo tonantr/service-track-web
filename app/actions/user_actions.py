@@ -50,6 +50,14 @@ class UserActions:
             logging.error(f"Error in get_services_by_car: {str(e)}")
             return None
     
+    def add_service(self, **kwargs):
+        try:
+            with self.user_db_handler as db:
+                return db.add_service(**kwargs)
+        except Exception as e:
+            logging.error(f"Error in add_service: {str(e)}")
+            return False
+    
     def update_car(self, car_id, **kwargs):
         try:
             with self.user_db_handler as db:

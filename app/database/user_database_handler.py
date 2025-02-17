@@ -60,6 +60,19 @@ class UserDatabaseHandler(DatabaseHandler):
 
         return self.fetch_all(query, (car_id,))
     
+    def add_service(self, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS)
+        
+        fields = list(kwargs.keys())
+        values = list(kwargs.values())
+
+        query = f"INSERT INTO services ({', '.join(fields)}) VALUES ({', '.join(['%s'] * len(fields))})"
+
+        logging.info(f"Executing query: {query} with values: {values}")
+
+        return self.execute_commit(query, tuple(values))
+
     def update_car(self, car_id, **kwargs):
         if not kwargs:
             raise ValueError(ERROR_NO_FIELDS)

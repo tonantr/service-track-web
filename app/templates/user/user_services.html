@@ -21,7 +21,7 @@
     {% endif %}
 
     <div style="margin-bottom: 15px; margin-top: 15px;">
-        <a href="#" class="add-button">+ Add Service</a>
+        <a href="{{ url_for('register_service') }}" class="add-button">+ Add Service</a>
     </div>
 
     {% if services %}

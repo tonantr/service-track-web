@@ -138,7 +138,7 @@ class AdminDatabaseHandler(DatabaseHandler):
         fields = list(kwargs.keys())
         values = list(kwargs.values())
 
-        query = f"INSERT INTO services ({','.join(fields)}) VALUES ({', '.join(['%s'] * len(values))})"
+        query = f"INSERT INTO services ({','.join(fields)}) VALUES ({', '.join(['%s'] * len(fields))})"
         return self.execute_commit(query, tuple(values))
 
     def update_service(self, service_id, **kwargs):
