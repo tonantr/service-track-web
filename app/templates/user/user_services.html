@@ -45,11 +45,11 @@
                 <td>{{ service['service_id'] }}</td>
                 <td>{{ service['car_name'] }}</td>
                 <td>{{ service['mileage'] }}</td>
-                <td>{{ service['service_type'] | default('') | truncate(30, True) }}</td>
+                <td title="{{ service['service_type'] | default('') }}">{{ service['service_type'] | default('') | truncate(30, True) }}</td>
                 <td>{{ service['service_date'] }}</td>
                 <td>{{ service['next_service_date'] }}</td>
                 <td>{{ service['cost'] }}</td>
-                <td>{{ service['notes'] | default('') | truncate(30, True) }}</td>
+                <td title="{{ service['notes'] | default('') }}">{{ service['notes'] | default('') | truncate(30, True) }}</td>
                 <td>
                     <a href="{{ url_for('edit_service', service_id = service.service_id) }}">Update</a> |
                     <a href="{{ url_for('remove_entity', entity='services', item_id=service.service_id) }}">Delete</a>
