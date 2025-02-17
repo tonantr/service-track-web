@@ -84,3 +84,16 @@ class UserDatabaseHandler(DatabaseHandler):
             return False
         
         return True
+    
+    def add_car(self, **kwargs):
+        if not kwargs:
+            raise ValueError(ERROR_NO_FIELDS)
+        
+        fields = list(kwargs.keys())
+        values = list(kwargs.values())
+
+        query = f"INSERT INTO cars ({', '.join(fields)}) VALUES (%s, %s, %s, %s, %s)"
+
+        logging.info(f"Executing query: {query} with values: {values}")
+        
+        return self.execute_commit(query, tuple(values))

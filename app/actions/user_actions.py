@@ -71,3 +71,11 @@ class UserActions:
         except Exception as e:
             logging.error(f"Error in delete_car: {str(e)}")
             return False
+    
+    def add_car(self, **kwargs):
+        try:
+            with self.user_db_handler as db:
+                return db.add_car(**kwargs)
+        except Exception as e:
+            logging.error(f"Error in add_car: {str(e)}")
+            return False

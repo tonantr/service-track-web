@@ -196,6 +196,39 @@ def init_app(app):
         
         return render_template("user/edit_car.html", car=car)
     
+    @app.route("/user/cars/register", methods = ["GET", "POST"])
+    def register_car():
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        form_data = {}
+        
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "user_id": session["user_id"],
+                    "name": request.form.get("name"),
+                    "model": request.form.get("model"),
+                    "year": request.form.get("year"),
+                    "vin": request.form.get("vin")
+                }
+                 
+                if helpers.check_vin_exists(form_data["vin"]):
+                    flash("VIN already exists.", "warning")
+                    return redirect(url_for("register_car", form_data=form_data))
+
+                if not user_actions.add_car(**form_data):
+                    flash("Failed to register car.", "danger")
+                    return redirect(url_for("register_car", form_data=form_data))
+                
+                return redirect(url_for("get_cars"))
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("user/register_car.html", form_data=form_data)
+    
     @app.route("/user/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
     def remove_entity(entity, item_id):
         if not Helpers.check_user_session():

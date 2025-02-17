@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="/user/dashboard">Dashboard</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Register Car</h1>
+        <hr>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="name">Name</label>
+                </div>
+                <input type="text" name="name" placeholder="Name" required
+                    value="{{ form_data.name if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="model">Model</label>
+                </div>
+                <input type="text" name="model" placeholder="Model" required
+                    value="{{ form_data.model if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="year">Year</label>
+                </div>
+                <input type="text" name="year" placeholder="Year" required pattern="\d{4}" title="Enter car year (YYYY)"
+                    value="{{ form_data.year if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <div class="label-container">
+                    <label for="vin">VIN</label>
+                </div>
+                <input type="text" name="vin" placeholder="VIN" required pattern="^[A-HJ-NPR-Z0-9]{17}$"
+                    title="Enter a valid 17-character VIN" value="{{ form_data.vin if form_data else '' }}">
+            </div>
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <a href="{{ url_for('get_cars') }}" class="btn btn-secondary" style="display: inline-block; margin-top: 20px;">
+            <<< Back</a>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+    </div>
+
+</body>
+
+</html>
