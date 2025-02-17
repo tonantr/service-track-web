@@ -240,7 +240,6 @@ def init_app(app):
         
         return render_template("user/edit_service.html", service=service)
 
-
     @app.route("/user/cars/edit/<int:car_id>", methods=["GET", "POST"])
     def edit_car(car_id):
         if not Helpers.check_user_session():
