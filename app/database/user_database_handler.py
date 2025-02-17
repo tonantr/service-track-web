@@ -13,7 +13,7 @@ class UserDatabaseHandler(DatabaseHandler):
     def __init__(self):
         super().__init__()
     
-    def get_cars_by_user(self, userid):
+    def get_cars_by_user(self, user_id):
         query = """
         SELECT car_id, user_id, name, model, year, vin 
         FROM cars 
@@ -21,8 +21,8 @@ class UserDatabaseHandler(DatabaseHandler):
         """
         logging.info(f"Executing query: {query}")
 
-        return self.fetch_all(query, (userid,))
-    
+        return self.fetch_all(query, (user_id,))
+
     def update_user(self, user_id, **kwargs):
         if not kwargs:
             raise ValueError(ERROR_NO_FIELDS)

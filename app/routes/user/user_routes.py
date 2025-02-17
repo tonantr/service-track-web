@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, session, request
+from flask import render_template, redirect, flash, url_for, session, request, send_file
 from app.utils.constants import (
     ERROR_NO_USERS_FOUND,
     ERROR_USER_NOT_FOUND,
@@ -230,6 +230,52 @@ def init_app(app):
         
         return render_template("user/remove_entity.html", entity=entity, item=item, entity_name=entity_name)
 
+    @app.route("/user/export/csv", methods=["GET", "POST"])
+    def export_to_csv(export_type="cars"):
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        cars = user_actions.get_cars_by_user(session["user_id"])
+        
+        if request.method == "POST":
+            export_type = request.form.get("export_type")
+            car_id = request.form.get("car_id")
+
+            if export_type == "services" and not car_id:
+                flash("Please select a car to export services.", "warning")
+                return redirect(url_for("export_to_csv", export_type=export_type))
+
+            downloads_folder = Helpers.get_downloads_folder()
+            file_name = f"{export_type}_usr.csv"
+            file_path = os.path.join(downloads_folder, file_name)
+
+            try:
+                data, headers = [], []
+                if export_type == "cars":
+                    data = cars
+                    headers = ["CarID", "UserID", "Name", "Model", "Year", "VIN"]
+                elif export_type == "services":
+                    data = user_actions.get_services_by_car(car_id)
+                    headers = ["ID", "Car Name", "Mileage", "Service Type", "Service Date", "Next Service Date", "Cost", "Notes"]
+
+                if not data:
+                    flash("No data found", "warning")
+                    return redirect(url_for("export_to_csv", export_type=export_type))
+
+                with open(file_path, "w", newline="", encoding="utf-8") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(headers)
+                    for row in data:
+                        writer.writerow(row.values())
+
+                return send_file(file_path, as_attachment=True)
+                
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("user/export_to_csv.html", export_type=export_type, cars=cars)
 
         
         

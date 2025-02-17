@@ -21,7 +21,7 @@
 
     <div class="container">
         <h1>Export Data</h1>
-
+        <hr>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <ul>
@@ -33,6 +33,7 @@
         {% endwith %}
 
         <form method="POST">
+            
             <div class="form-group">
                 <div class="label-container">
                     <label for="export_type">Select Type:</label>

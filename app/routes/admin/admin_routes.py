@@ -426,10 +426,10 @@ def init_app(app):
                     headers = ["ID", "Username", "Role", "Email"]
                 elif export_type == "cars":
                     data = admin_actions.get_all_cars()
-                    headers = ["ID", "Name", "Model", "Year", "Owner", "Service"]
+                    headers = ["ID", "Name", "Model", "Year", "VIN", "Owner"]
                 elif export_type == "services":
                     data = admin_actions.get_all_services()
-                    headers = ["ID", "Car Name", "Service Type", "Service Date", "Next Service Date", "Notes"]
+                    headers = ["ID", "Car Name", "Mileage", "Service Type", "Service Date", "Next Service Date", "Cost", "Notes"]
 
                 if not data:
                     flash("No data found", "warning")
@@ -448,7 +448,7 @@ def init_app(app):
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
         
-        return render_template("export_csv.html", export_type=export_type)
+        return render_template("admin/export_csv.html", export_type=export_type)
                 
         
         
