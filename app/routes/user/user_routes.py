@@ -200,7 +200,48 @@ def init_app(app):
         
         return render_template("user/register_service.html", cars=cars, form_data=form_data)
 
-    @app.route("/user/cars/update/<int:car_id>", methods=["GET", "POST"])
+    @app.route("/user/services/edit/<int:service_id>", methods=["GET", "POST"])
+    def edit_service(service_id):
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
+        
+        service = helpers.get_service_by_id(service_id)
+        if not service:
+            flash(ERROR_SERVICE_NOT_FOUND, "danger")
+            return redirect(url_for("service_history"))
+        
+        form_data = {}
+
+        if request.method == "POST":
+            try:
+                form_data = {
+                    "car_id": request.form.get("car_id").strip(),
+                    "mileage": request.form.get("mileage").strip(),
+                    "service_type": request.form.get("service_type").strip(),
+                    "service_date": request.form.get("service_date").strip(),
+                    "next_service_date": request.form.get("next_service_date").strip(),
+                    "cost": request.form.get("cost").strip(),
+                    "notes": request.form.get("notes").strip()
+                }
+
+                form_data["mileage"] = int(form_data["mileage"]) if form_data["mileage"] else None
+                form_data["cost"] = float(form_data["cost"]) if form_data["cost"] else None
+                form_data["next_service_date"] = form_data["next_service_date"] or None
+                
+                if not user_actions.update_service(service_id, **form_data):
+                    flash("Failed to edit service.", "danger")
+                    return render_template("edit_service.html", service=service, form_data=form_data)
+                
+                return redirect(url_for("service_history"))
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+        
+        return render_template("user/edit_service.html", service=service)
+
+
+    @app.route("/user/cars/edit/<int:car_id>", methods=["GET", "POST"])
     def edit_car(car_id):
         if not Helpers.check_user_session():
             return redirect(url_for("index"))
