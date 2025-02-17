@@ -105,6 +105,11 @@ button {
     text-align: center;
     display: inline-block;
     margin-top: 15px;
+    background-color: white;
+    color: #333;
+    border: 2px solid #333;
+
+
 }
 
 .btn-secondary {
