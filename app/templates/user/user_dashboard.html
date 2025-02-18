@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSM</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" charset="utf8"
@@ -33,6 +32,15 @@
             <h2>Overview</h2>
             <p>Manage your cars and service history from this dashboard.</p>
             <p>For full details, please export to a <a href="{{ url_for('export_to_csv') }}" class="csv">CSV file.</a></p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="search-container">
+                <form action="{{ url_for('user_search') }}" method="GET">
+                    <input type="text" name="query" placeholder="services..." required>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
         </div>
 
         <h2>My Cars</h2>
@@ -63,18 +71,7 @@
 
         {% endif %}
 
-        <script>
-            $(document).ready(function () {
-                $('table').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "lengthChange": true,
-                    "pageLength": 10,
-                    "responsive": true
-                });
-            });
-        </script>
+        <script src="{{ url_for('static', filename='js/tables.js') }}"></script>
 
     </div>
 

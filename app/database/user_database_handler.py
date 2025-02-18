@@ -131,3 +131,22 @@ class UserDatabaseHandler(DatabaseHandler):
         logging.info(f"Executing query: {query} with values: {values}")
         
         return self.execute_commit(query, tuple(values))
+
+    def query_services(self, query):
+        query_string = """
+        SELECT service_id, mileage, service_type, service_date, next_service_date, cost, notes FROM services WHERE CAST(mileage AS CHAR) LIKE %s
+        OR LOWER(service_type) LIKE LOWER(%s)
+        OR CAST(service_date AS CHAR) LIKE %s
+        OR CAST(next_service_date AS CHAR) LIKE %s
+        OR FORMAT(cost, 2) LIKE %s
+        """
+        return self.fetch_all(
+            query_string,
+            (
+                "%" + query + "%",
+                "%" + query + "%",
+                "%" + query + "%",
+                "%" + query + "%",
+                "%" + query + "%",
+            ),
+        )

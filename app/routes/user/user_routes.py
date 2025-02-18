@@ -391,5 +391,30 @@ def init_app(app):
         
         return render_template("user/export_to_csv.html", export_type=export_type, cars=cars)
 
+    @app.route("/user/search", methods=["GET"])
+    def user_search():
+        if not Helpers.check_user_session():
+            return redirect(url_for("index"))
         
+        query = request.args.get("query", "").strip()
+        services = []
+
+        if query:
+            try:        
+                services = user_actions.search_services(query)
+
+                if not services:
+                    flash("No results found.", "info")
+                    
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+
+        return render_template(
+            "user/user_search.html",
+            services=services,
+            logged_in_user=session["username"],
+            role=session["role"],
+        )    
         

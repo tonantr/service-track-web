@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Search Results</h1>
+
+{% if services is not none and services %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Mileage</th>
+                <th scope="col">Service Type</th>
+                <th scope="col">Service Date</th>
+                <th scope="col">Next Service Date</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+            <tr>
+                <td>{{ service.service_id }}</td>
+                <td>{{ service.mileage }}</td>
+                <td title="{{ service['service_type'] }}">{{ (service['service_type'] or '') | truncate(30, True, '...') }}</td>
+                <td>{{ service.service_date }}</td>
+                <td>{{ service.next_service_date }}</td>
+                <td>{{ service.cost }}</td>
+                <td title="{{ service['notes'] }}">{{ (service['notes'] or '') | truncate(30, True, '...') }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary"> <<< Back</a>
+
+{% endblock %}
