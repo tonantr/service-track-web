@@ -457,8 +457,8 @@ def init_app(app):
         
         query = request.args.get("query", "").strip()
         users = []
-        # cars = []
-        # services = []
+        cars = []
+        services = []
 
         if query:
             try:        
