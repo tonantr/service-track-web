@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Car Name</th>
                 <th scope="col">Mileage</th>
                 <th scope="col">Service Type</th>
                 <th scope="col">Service Date</th>
@@ -20,6 +21,7 @@
             {% for service in services %}
             <tr>
                 <td>{{ service.service_id }}</td>
+                <td>{{ service.car_name }}</td>
                 <td>{{ service.mileage }}</td>
                 <td title="{{ service['service_type'] }}">{{ (service['service_type'] or '') | truncate(30, True, '...') }}</td>
                 <td>{{ service.service_date }}</td>

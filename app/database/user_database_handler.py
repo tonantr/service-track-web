@@ -132,21 +132,30 @@ class UserDatabaseHandler(DatabaseHandler):
         
         return self.execute_commit(query, tuple(values))
 
-    def query_services(self, query):
+    def query_services(self, query, user_id):
         query_string = """
-        SELECT service_id, mileage, service_type, service_date, next_service_date, cost, notes FROM services WHERE CAST(mileage AS CHAR) LIKE %s
-        OR LOWER(service_type) LIKE LOWER(%s)
-        OR CAST(service_date AS CHAR) LIKE %s
-        OR CAST(next_service_date AS CHAR) LIKE %s
-        OR FORMAT(cost, 2) LIKE %s
+        SELECT s.service_id, c.name AS car_name, s.mileage, s.service_type, s.service_date, s.next_service_date, s.cost, s.notes
+        FROM services s
+        JOIN cars c ON s.car_id = c.car_id
+        WHERE c.user_id = %s
+        AND (
+            CAST(s.mileage AS CHAR) LIKE %s
+            OR LOWER(s.service_type) LIKE LOWER(%s)
+            OR CAST(s.service_date AS CHAR) LIKE %s
+            OR CAST(s.next_service_date AS CHAR) LIKE %s
+            OR FORMAT(s.cost, 2) LIKE %s
+        )
         """
+        query_like = "%" + query + "%"
+
         return self.fetch_all(
             query_string,
             (
-                "%" + query + "%",
-                "%" + query + "%",
-                "%" + query + "%",
-                "%" + query + "%",
-                "%" + query + "%",
+                user_id,
+                query_like,
+                query_like,
+                query_like,
+                query_like,
+                query_like,
             ),
         )

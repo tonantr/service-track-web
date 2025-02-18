@@ -104,10 +104,10 @@ class UserActions:
             logging.error(f"Error in add_car: {str(e)}")
             return False
     
-    def search_services(self, query):
+    def search_services(self, query, user_id):
         try:
             with self.user_db_handler as db:
-                return db.query_services(query)
+                return db.query_services(query, user_id)
         except Exception as e:
             logging.error(f"Error in search_services: {str(e)}")
             return None

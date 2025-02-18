@@ -396,15 +396,13 @@ def init_app(app):
         if not Helpers.check_user_session():
             return redirect(url_for("index"))
         
+        user_id = session["user_id"]
         query = request.args.get("query", "").strip()
         services = []
 
         if query:
             try:        
-                services = user_actions.search_services(query)
-
-                if not services:
-                    flash("No results found.", "info")
+                services = user_actions.search_services(query, user_id)
                     
             except Exception as e:
                 logging.error(f"Error occurred: {str(e)}") 
