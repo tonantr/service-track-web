@@ -449,6 +449,37 @@ def init_app(app):
                 return render_template("error.html", error_message=error_message)
         
         return render_template("admin/export_csv.html", export_type=export_type)
-                
+
+    @app.route("/admin/search", methods=["GET"])
+    def admin_search():
+        if not Helpers.check_admin_session():
+            return redirect(url_for("index"))
         
+        query = request.args.get("query", "").strip()
+        users = []
+        # cars = []
+        # services = []
+
+        if query:
+            try:        
+                users = admin_actions.search_users(query)
+                cars = admin_actions.search_cars(query)
+                services = admin_actions.search_services(query)
+
+                if not (users or cars or services):
+                    flash("No results found.", "info")
+                    
+            except Exception as e:
+                logging.error(f"Error occurred: {str(e)}") 
+                error_message = f"An error occurred: {str(e)}"
+                return render_template("error.html", error_message=error_message)
+
+        return render_template(
+            "admin/admin_search.html",
+            users=users,
+            cars=cars,
+            services=services,
+            logged_in_user=session["username"],
+            role=session["role"],
+        )
         

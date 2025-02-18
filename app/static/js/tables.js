@@ -5,6 +5,7 @@ $(document).ready(function () {
         "ordering": true,
         "lengthChange": true,
         "pageLength": 10,
-        "responsive": true
+        "responsive": true,
+        "autoWidth": true 
     });
 });

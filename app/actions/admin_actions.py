@@ -151,3 +151,27 @@ class AdminActions:
         except Exception as e:
             logging.error(f"Error in get_total_services: {str(e)}")
             return None
+    
+    def search_users(self, query):
+        try:
+            with self.admin_db_handler as db:
+                return db.query_users(query)
+        except Exception as e:
+            logging.error(f"Error in search_users: {str(e)}")
+            return None
+    
+    def search_cars(self, query):
+        try:
+            with self.admin_db_handler as db:
+                return db.query_cars(query)
+        except Exception as e:
+            logging.error(f"Error in search_cars: {str(e)}")
+            return None
+    
+    def search_services(self, query):
+        try:
+            with self.admin_db_handler as db:
+                return db.query_services(query)
+        except Exception as e:
+            logging.error(f"Error in search_services: {str(e)}")
+            return None

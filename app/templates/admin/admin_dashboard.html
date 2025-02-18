@@ -30,6 +30,15 @@
             <p>For full details, please export to a <a href="{{ url_for('export_csv') }}" class="csv">CSV file.</a></p>
         </div>
 
+        <div class="dashboard-card">
+            <div class="search-container">
+            <form action="{{ url_for('admin_search') }}" method="GET">
+                <input type="text" name="query" placeholder="users, cars, services..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        </div>
+
         <div class="stats-container">
             <div class="stats-box">
                 <h2>Total Users</h2>

@@ -173,3 +173,16 @@ class AdminDatabaseHandler(DatabaseHandler):
         query = "SELECT COUNT(*) FROM services"
         result = self.fetch_one(query)
         return result["COUNT(*)"] if result else 0
+    
+    def query_users(self, query):
+        query_string = "SELECT user_id, username, role, email FROM users WHERE LOWER(username) LIKE LOWER(%s) OR LOWER(email) LIKE LOWER(%s)"
+        return self.fetch_all(query_string, ('%' + query + '%', '%' + query + '%'))
+    
+    def query_cars(self, query):
+        query_string = "SELECT car_id, name, model, year, vin FROM cars WHERE LOWER(name) LIKE LOWER(%s) OR LOWER(model) LIKE LOWER(%s)"
+        return self.fetch_all(query_string, ('%' + query + '%', '%' + query + '%'))
+    
+    def query_services(self, query):
+        query_string = "SELECT service_id, mileage, service_type, service_date, next_service_date, cost, notes FROM services WHERE LOWER(service_type) LIKE LOWER(%s)"
+        return self.fetch_all(query_string, ('%' + query + '%',))
+    
