@@ -15,6 +15,9 @@
 git clone https://github.com/tonantr/service-track-web.git
 cd service-track-web
 
+## Generate the requirements.txt
+pip freeze > requirements.txt
+
 ###  Install Dependencies
 pip install -r requirements.txt
 
