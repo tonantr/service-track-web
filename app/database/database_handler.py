@@ -1,9 +1,7 @@
 import mysql.connector
 import logging
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
 
 logging.basicConfig(
     filename="app.log",
