@@ -6,13 +6,13 @@ from app.utils.constants import (
     ERROR_NO_CARS_FOUND,
     ERROR_CAR_NOT_FOUND,
     ERROR_NO_SERVICES_FOUND,
-    ERROR_SERVICE_NOT_FOUND
+    ERROR_SERVICE_NOT_FOUND,
 )
 from app.actions.admin_actions import AdminActions
 from app.database.database_handler import DatabaseHandler
 from app.utils.helpers import Helpers
+from app.auth.auth_service import hash_password
 from app.utils.validators import validate_email, validate_password, validate_username
-from app.auth.password_hashing import hash_password
 import logging
 import os
 import csv
@@ -38,7 +38,7 @@ def init_app(app):
             if None in (total_users, total_cars, total_services):
                 raise Exception(ERROR_FETCHING_DATA)
         except Exception as e:
-            logging.error(f"Error occurred: {str(e)}") 
+            logging.error(f"Error occurred: {str(e)}")
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
 
@@ -64,7 +64,7 @@ def init_app(app):
 
             return render_template("admin/users.html", users=users)
         except Exception as e:
-            logging.error(f"Error occurred: {str(e)}") 
+            logging.error(f"Error occurred: {str(e)}")
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
 
@@ -72,7 +72,7 @@ def init_app(app):
     def add_user():
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         if request.method == "POST":
             try:
                 username = request.form.get("username")
@@ -83,87 +83,90 @@ def init_app(app):
                 if not validate_username(username):
                     flash("Username must be at least 3 characters.", "danger")
                     return render_template("admin/add_user.html")
-                
+
                 if not validate_email(email):
                     flash("Invalid email format.", "danger")
                     return render_template("admin/add_user.html")
-                
+
                 if not validate_password(password):
                     flash("Password must be at least 6 characters.", "danger")
                     return render_template("admin/add_user.html")
-                
+
                 if helpers.check_username_exists(username):
-                        flash("Username already exists.", "warning")
-                        return render_template("admin/add_user.html")
-                
+                    flash("Username already exists.", "warning")
+                    return render_template("admin/add_user.html")
+
                 if helpers.check_email_exists(email):
-                        flash("Email already exists.", "warning")
-                        return render_template("admin/add_user.html")
-                
+                    flash("Email already exists.", "warning")
+                    return render_template("admin/add_user.html")
+
                 if password:
                     hashed_password = hash_password(password)
 
                 if not admin_actions.add_user(username, email, hashed_password, role):
                     flash("Failed to add user.", "danger")
                     return render_template("admin/add_user.html")
-                
-                return redirect(url_for("list_users")) 
+
+                return redirect(url_for("list_users"))
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
-        
+
         return render_template("admin/add_user.html")
 
     @app.route("/admin/users/update/<int:user_id>", methods=["GET", "POST"])
     def update_user(user_id):
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         user = helpers.get_user_by_id(user_id)
         if not user:
             flash(ERROR_USER_NOT_FOUND, "warning")
             return redirect(url_for("list_users"))
-        
+
         if request.method == "POST":
             try:
                 updated_data = {
                     "username": request.form.get("username"),
                     "role": request.form.get("role"),
                     "email": request.form.get("email"),
-                    "password": request.form.get("password")
+                    "password": request.form.get("password"),
                 }
 
-                if request.form.get("username") != user["username"] and helpers.check_username_exists(updated_data["username"]):
-                        flash("Username already exists.", "warning")
-                        return render_template("admin/update_user.html", user=user)
-                
-                if request.form.get("email") != user["email"] and helpers.check_email_exists(updated_data["email"]):
-                        flash("Email already exists.", "warning")
-                        return render_template("admin/update_user.html", user=user)
-                
+                if request.form.get("username") != user[
+                    "username"
+                ] and helpers.check_username_exists(updated_data["username"]):
+                    flash("Username already exists.", "warning")
+                    return render_template("admin/update_user.html", user=user)
+
+                if request.form.get("email") != user[
+                    "email"
+                ] and helpers.check_email_exists(updated_data["email"]):
+                    flash("Email already exists.", "warning")
+                    return render_template("admin/update_user.html", user=user)
+
                 if updated_data["password"]:
                     updated_data["password"] = hash_password(updated_data["password"])
-                
 
                 if not admin_actions.update_user(user_id, **updated_data):
                     flash("Failed to update user.", "danger")
                     return render_template("admin/update_user.html")
-                
-                return redirect(url_for("list_users")) 
-            
+
+                return redirect(url_for("list_users"))
+
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
-        
+
         return render_template("admin/update_user.html", user=user)
-      
+
     @app.route("/admin/cars")
     def list_cars():
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         try:
             cars = admin_actions.get_all_cars()
 
@@ -173,7 +176,7 @@ def init_app(app):
 
             return render_template("admin/cars.html", cars=cars)
         except Exception as e:
-            logging.error(f"Error occurred: {str(e)}") 
+            logging.error(f"Error occurred: {str(e)}")
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
 
@@ -181,12 +184,12 @@ def init_app(app):
     def add_car():
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         users = admin_actions.get_all_users()
         if not users:
-                flash(ERROR_NO_USERS_FOUND, "warning")
-                return redirect(url_for("list_cars"))
-        
+            flash(ERROR_NO_USERS_FOUND, "warning")
+            return redirect(url_for("list_cars"))
+
         if request.method == "POST":
             try:
                 form_data = {
@@ -194,41 +197,45 @@ def init_app(app):
                     "name": request.form.get("name"),
                     "model": request.form.get("model"),
                     "year": request.form.get("year"),
-                    "vin": request.form.get("vin")
+                    "vin": request.form.get("vin"),
                 }
 
                 if helpers.check_vin_exists(form_data["vin"]):
                     flash("VIN already exists.", "warning")
-                    return render_template("add_car.html", role="admin", users=users, form_data=form_data)
+                    return render_template(
+                        "add_car.html", role="admin", users=users, form_data=form_data
+                    )
 
                 if not admin_actions.add_car(**form_data):
                     flash("Failed to add car.", "danger")
-                    return render_template("add_car.html", role="admin", users=users, form_data=form_data)
-                
+                    return render_template(
+                        "add_car.html", role="admin", users=users, form_data=form_data
+                    )
+
                 return redirect(url_for("list_cars"))
-                
+
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
-        
+
         return render_template("admin/add_car.html", role="admin", users=users)
 
     @app.route("/admin/cars/update/<int:car_id>", methods=["GET", "POST"])
     def update_car(car_id):
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         users = admin_actions.get_all_users()
         if not users:
-                flash(ERROR_NO_USERS_FOUND, "warning")
-                return redirect(url_for("list_cars"))
-        
+            flash(ERROR_NO_USERS_FOUND, "warning")
+            return redirect(url_for("list_cars"))
+
         car = helpers.get_car_by_id(car_id)
         if not car:
             flash(ERROR_CAR_NOT_FOUND, "danger")
             return redirect(url_for("list_cars"))
-        
+
         if request.method == "POST":
             try:
                 form_data = {
@@ -236,27 +243,31 @@ def init_app(app):
                     "name": request.form.get("name"),
                     "model": request.form.get("model"),
                     "year": request.form.get("year"),
-                    "vin": request.form.get("vin")
+                    "vin": request.form.get("vin"),
                 }
 
                 if not admin_actions.update_car(car_id, **form_data):
                     flash("Failed to update car.", "danger")
-                    return render_template("update_car.html", role="admin", users=users, car=car)
-                
-                return redirect(url_for("list_cars")) 
+                    return render_template(
+                        "update_car.html", role="admin", users=users, car=car
+                    )
+
+                return redirect(url_for("list_cars"))
 
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
-            
-        return render_template("admin/update_car.html", role="admin", users=users, car=car)
+
+        return render_template(
+            "admin/update_car.html", role="admin", users=users, car=car
+        )
 
     @app.route("/admin/services")
     def list_services():
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         try:
             services = admin_actions.get_all_services() or []
 
@@ -269,15 +280,15 @@ def init_app(app):
                 service["service_type"] = service["service_type"] or "N/A"
                 service["service_date"] = service["service_date"] or "N/A"
                 service["next_service_date"] = service["next_service_date"] or "N/A"
-                service["cost"] = service["cost"] if service["cost"] is not None else "N/A"
+                service["cost"] = (
+                    service["cost"] if service["cost"] is not None else "N/A"
+                )
                 service["notes"] = service["notes"] or "N/A"
 
-            return render_template(
-                "admin/services.html", services=services
-            )
+            return render_template("admin/services.html", services=services)
 
         except Exception as e:
-            logging.error(f"Error occurred: {str(e)}") 
+            logging.error(f"Error occurred: {str(e)}")
             error_message = f"An error occurred: {str(e)}"
             return render_template("error.html", error_message=error_message)
 
@@ -285,12 +296,12 @@ def init_app(app):
     def add_service():
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         cars = admin_actions.get_all_cars()
         if not cars:
-                flash(ERROR_NO_CARS_FOUND, "warning")
-                return redirect(url_for("list_services"))
-        
+            flash(ERROR_NO_CARS_FOUND, "warning")
+            return redirect(url_for("list_services"))
+
         if request.method == "POST":
             try:
                 form_data = {
@@ -300,39 +311,45 @@ def init_app(app):
                     "service_date": request.form.get("service_date").strip(),
                     "next_service_date": request.form.get("next_service_date").strip(),
                     "cost": request.form.get("cost").strip(),
-                    "notes": request.form.get("notes").strip()
+                    "notes": request.form.get("notes").strip(),
                 }
 
                 form_data["car_id"] = int(form_data["car_id"])
-                form_data["mileage"] = int(form_data["mileage"]) if form_data["mileage"] else None
-                form_data["cost"] = float(form_data["cost"]) if form_data["cost"] else None
+                form_data["mileage"] = (
+                    int(form_data["mileage"]) if form_data["mileage"] else None
+                )
+                form_data["cost"] = (
+                    float(form_data["cost"]) if form_data["cost"] else None
+                )
 
                 if not form_data["next_service_date"]:
-                    form_data["next_service_date"] = None 
+                    form_data["next_service_date"] = None
 
                 if not admin_actions.add_service(**form_data):
                     flash("Failed to add service.", "danger")
-                    return render_template("add_service.html", role="admin", cars=cars, form_data=form_data)
-                
+                    return render_template(
+                        "add_service.html", role="admin", cars=cars, form_data=form_data
+                    )
+
                 return redirect(url_for("list_services"))
-                
+
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
-        
+
         return render_template("admin/add_service.html", role="admin", cars=cars)
 
     @app.route("/admin/services/update/<int:service_id>", methods=["GET", "POST"])
     def update_service(service_id):
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         service = helpers.get_service_by_id(service_id)
         if not service:
             flash(ERROR_SERVICE_NOT_FOUND, "danger")
             return redirect(url_for("list_services"))
-        
+
         if request.method == "POST":
             try:
                 form_data = {
@@ -342,27 +359,38 @@ def init_app(app):
                     "service_date": request.form.get("service_date").strip(),
                     "next_service_date": request.form.get("next_service_date").strip(),
                     "cost": request.form.get("cost").strip(),
-                    "notes": request.form.get("notes").strip()
+                    "notes": request.form.get("notes").strip(),
                 }
 
-                form_data["mileage"] = int(form_data["mileage"]) if form_data["mileage"] else None
-                form_data["cost"] = float(form_data["cost"]) if form_data["cost"] else None
+                form_data["mileage"] = (
+                    int(form_data["mileage"]) if form_data["mileage"] else None
+                )
+                form_data["cost"] = (
+                    float(form_data["cost"]) if form_data["cost"] else None
+                )
 
                 if not form_data["next_service_date"]:
-                    form_data["next_service_date"] = None 
-                
+                    form_data["next_service_date"] = None
+
                 if not admin_actions.update_service(service_id, **form_data):
                     flash("Failed to update service.", "danger")
-                    return render_template("update_service.html", role="admin", service=service, form_data=form_data)
-                
+                    return render_template(
+                        "update_service.html",
+                        role="admin",
+                        service=service,
+                        form_data=form_data,
+                    )
+
                 return redirect(url_for("list_services"))
 
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
 
-        return render_template("admin/update_service.html", role="admin", service=service)
+        return render_template(
+            "admin/update_service.html", role="admin", service=service
+        )
 
     @app.route("/admin/<entity>/delete/<int:item_id>", methods=["GET", "POST"])
     def delete_entity(entity, item_id):
@@ -382,7 +410,7 @@ def init_app(app):
         if not item:
             flash(f"{entity_name} not found.", "warning")
             return redirect(url_for(f"list_{entity}"))
-        
+
         if request.method == "POST":
             try:
                 if entity == "users":
@@ -399,19 +427,21 @@ def init_app(app):
                         return redirect(url_for(f"list_{entity}"))
 
                 return redirect(url_for(f"list_{entity}"))
-            
+
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
 
-        return render_template("admin/confirmation.html", entity=entity, item=item, entity_name=entity_name)
-    
+        return render_template(
+            "admin/confirmation.html", entity=entity, item=item, entity_name=entity_name
+        )
+
     @app.route("/admin/export/csv", methods=["GET", "POST"])
     def export_csv(export_type="users"):
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         if request.method == "POST":
             export_type = request.form.get("export_type")
 
@@ -429,7 +459,16 @@ def init_app(app):
                     headers = ["ID", "Name", "Model", "Year", "VIN", "Owner"]
                 elif export_type == "services":
                     data = admin_actions.get_all_services()
-                    headers = ["ID", "Car Name", "Mileage", "Service Type", "Service Date", "Next Service Date", "Cost", "Notes"]
+                    headers = [
+                        "ID",
+                        "Car Name",
+                        "Mileage",
+                        "Service Type",
+                        "Service Date",
+                        "Next Service Date",
+                        "Cost",
+                        "Notes",
+                    ]
 
                 if not data:
                     flash("No data found", "warning")
@@ -442,35 +481,35 @@ def init_app(app):
                         writer.writerow(row.values())
 
                 return send_file(file_path, as_attachment=True)
-                
+
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
-        
+
         return render_template("admin/export_csv.html", export_type=export_type)
 
     @app.route("/admin/search", methods=["GET"])
     def admin_search():
         if not Helpers.check_admin_session():
             return redirect(url_for("index"))
-        
+
         query = request.args.get("query", "").strip()
         users = []
         cars = []
         services = []
 
         if query:
-            try:        
+            try:
                 users = admin_actions.search_users(query)
                 cars = admin_actions.search_cars(query)
                 services = admin_actions.search_services(query)
 
                 if not (users or cars or services):
                     flash("No results found.", "info")
-                    
+
             except Exception as e:
-                logging.error(f"Error occurred: {str(e)}") 
+                logging.error(f"Error occurred: {str(e)}")
                 error_message = f"An error occurred: {str(e)}"
                 return render_template("error.html", error_message=error_message)
 
@@ -482,4 +521,3 @@ def init_app(app):
             logged_in_user=session["username"],
             role=session["role"],
         )
-        
