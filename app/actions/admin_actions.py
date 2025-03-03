@@ -5,7 +5,7 @@ from app.database.admin_database_handler import AdminDatabaseHandler
 
 logging.basicConfig(
     filename="app.log",
-    level=logging.DEBUG,
+    level=logging.WARNING,
     format="%(asctime)s - %(levelname)s - %(module)s - Line: %(lineno)d - %(message)s",
 )
 
