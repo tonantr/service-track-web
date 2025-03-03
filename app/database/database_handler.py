@@ -15,7 +15,7 @@ load_dotenv()
 
 class DatabaseHandler:
     def __init__(self, host=None, port=None, user=None, password=None, database=None):
-        self.host = host or os.getenv("MYSQL_HOST_MAC", "localhost")
+        self.host = host or os.getenv("MYSQL_HOST_WIN", "localhost")
         self.port = port or os.getenv("MYSQL_PORT_REMOTE", 3306)
         self.user = user or os.getenv("MYSQL_USER")
         self.password = password or os.getenv("MYSQL_PASSWORD")
